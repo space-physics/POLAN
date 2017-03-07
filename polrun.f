@@ -23,11 +23,9 @@ C-------------------------------------------------------------------------------
       call date_and_time (dat)
 
       nargin = command_argument_count()
-      if (nargin.gt.0) then
-        call get_command_argument(1,datin)
-      else
-        error stop('must specify input file')
-      endif
+      if (nargin.eq.0) error stop('must specify input file')
+ 
+      call get_command_argument(1,datin)
 
       OPEN (UNIT=1, FILE= datin, STATUS='OLD')
       OPEN (UNIT=2, FILE='out.dat')
