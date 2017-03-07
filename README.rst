@@ -4,8 +4,8 @@ POLAN
 
 POLAN is a classic Fortran program used to calculate real-height profiles from chirp ionosonde data from the ionosphere.
 
-::revised::  Nov'87/ Mar'88/ Feb'93/ (Nov'95)
-::author:: J. E. Titheridge
+:revised:  Nov'87/ Mar'88/ Feb'93/ (Nov'95)
+:author: J. E. Titheridge
 
 .. contents::
 
