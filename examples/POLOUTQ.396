@@ -1,0 +1,114 @@
+ P O L A N    of  FEBRUARY 1993.     Data file:  polrun.dat       Run: 03/20/96.
+
+(1)  SINGLE LAYER.          FH-1.00  Dip 30.0    Amode  0.0  Valy  0.00  List 0
+
+(1A)CHAPMAN, HM=300,SH=60   Start = -1.000
+PEAK  6.999 (ñ0.020) MHz,  Height 299.7 (ñ 0.5) km.    ScaleHt 59.6 (ñ 0.6) km  SlabT  75.9 km
+
+(1B) TRUNCATED:  WITH FO    Start = -1.000
+PEAK  7.000 (ñ0.014) MHz,  Height 299.9 (ñ 0.2) km.    ScaleHt 59.8 (ñ 0.3) km  SlabT  61.0 km
+
+(1C)        WITH FO + FX    Start = -1.000
+PEAK  7.000 (ñ0.012) MHz,  Height 299.9 (ñ 0.2) km.    ScaleHt 59.8 (ñ 0.2) km  SlabT  61.0 km
+
+(1D)        WITH FX ONLY    Start = -1.000
+PEAK  7.000 (ñ0.013) MHz,  Height 299.9 (ñ 0.2) km.    ScaleHt 59.8 (ñ 0.3) km  SlabT  61.0 km
+
+(1E)        WITH BAD FC     Start = -1.000
+PEAK  6.961 (ñ0.094) MHz,  Height 295.6 (ñ 1.3) km.    ScaleHt 56.2 (ñ 1.4) km  SlabT  56.8 km
+
+(1F)   MODEL START          Start = 90.000
+PEAK  2.988 (ñ0.030) MHz,  Height 120.9 (ñ 1.2) km.    ScaleHt 11.7 (ñ 0.5) km  SlabT  17.5 km
+
+(1G) MODEL ABOVE EXTRAPN.   Start =100.000
+PEAK  2.989 (ñ0.027) MHz,  Height 122.0 (ñ 1.1) km.    ScaleHt 11.8 (ñ 0.5) km  SlabT  16.8 km
+
+(1H) START FN AT 90 KM.     Start =  0.400
+PEAK  2.988 (ñ0.030) MHz,  Height 121.1 (ñ 1.2) km.    ScaleHt 11.7 (ñ 0.5) km  SlabT  17.4 km
+
+(1I) E CUSP, CONTINUOUS     Start =  0.000
+PEAK  4.993 (ñ0.045) MHz,  Height 261.3 (ñ 3.7) km.    ScaleHt 75.9 (ñ 2.0) km  SlabT 107.7 km
+
+(1J) E CUSP,DISCONTINUOUS   Start =  0.000
+PEAK  4.993 (ñ0.046) MHz,  Height 261.4 (ñ 3.6) km.    ScaleHt 76.4 (ñ 1.9) km  SlabT 106.8 km
+
+(2) TWO LAYERS, + VALLEY    FH-1.00  Dip 30.0    Amode  0.0  Valy  0.00  List 0
+
+(2A) MONOTONIC (NO VALLY)   Start =  0.000
+PEAK  2.988 (ñ0.030) MHz,  Height 120.9 (ñ 1.2) km.    ScaleHt 11.7 (ñ 0.5) km  SlabT  17.5 km
+PEAK  4.994 (ñ0.047) MHz,  Height 260.9 (ñ 3.5) km.    ScaleHt 77.2 (ñ 1.9) km  SlabT 107.6 km
+
+(2B) DEFAULT VALLEY CALCN   Start =  0.000
+PEAK  2.988 (ñ0.030) MHz,  Height 120.9 (ñ 1.2) km.    ScaleHt 11.7 (ñ 0.5) km  SlabT  17.5 km
+ 2 Valley  29.0 km wide,  0.10 MHz deep.  Devn 2.00 km.  7 terms fit  7 O + 0 X + 4.  hx= 160.5
+PEAK  4.991 (ñ0.039) MHz,  Height 263.5 (ñ 4.0) km.    ScaleHt 73.4 (ñ 2.1) km  SlabT 105.0 km
+
+(2C) 40KM VALLEY;NO FPEAK   Start =  0.000
+PEAK  2.988 (ñ0.030) MHz,  Height 120.9 (ñ 1.2) km.    ScaleHt 11.7 (ñ 0.5) km  SlabT  17.5 km
+ 2 Valley  40.0 km wide,  0.20 MHz deep.  Devn 0.82 km.  7 terms fit  7 O + 0 X + 4.  hx= 168.5
+
+(2D) MAXIMUM VALLEY.        Start =  0.000
+PEAK  2.988 (ñ0.030) MHz,  Height 120.9 (ñ 1.2) km.    ScaleHt 11.7 (ñ 0.5) km  SlabT  17.5 km
+ 2 Valley  69.8 km wide,  0.42 MHz deep.  Devn 3.67 km.  7 terms fit  7 O + 0 X + 4.  hx= 192.6
+PEAK  4.982 (ñ0.059) MHz,  Height 270.3 (ñ 5.3) km.    ScaleHt 62.9 (ñ 2.7) km  SlabT  96.6 km
+
+(2E) DEEP VALLEY            Start =  0.000
+PEAK  2.988 (ñ0.030) MHz,  Height 120.9 (ñ 1.2) km.    ScaleHt 11.7 (ñ 0.5) km  SlabT  17.5 km
+ 2 Valley  36.5 km wide,  1.00 MHz deep.  Devn 7.55 km.  7 terms fit  7 O + 0 X + 4.  hx= 167.6
+PEAK  4.989 (ñ0.033) MHz,  Height 266.7 (ñ 4.3) km.    ScaleHt 70.7 (ñ 2.2) km  SlabT 101.5 km
+
+(2F) SHALLOW VALLEY         Start =  0.000
+PEAK  2.988 (ñ0.030) MHz,  Height 120.9 (ñ 1.2) km.    ScaleHt 11.7 (ñ 0.5) km  SlabT  17.5 km
+ 2 Valley  13.0 km wide,  0.02 MHz deep.  Devn 0.87 km.  7 terms fit  7 O + 0 X + 4.  hx= 152.1
+PEAK  4.992 (ñ0.042) MHz,  Height 261.7 (ñ 3.7) km.    ScaleHt 75.5 (ñ 2.0) km  SlabT 106.5 km
+
+(2G) 1E  +  1F; with fc     Start = 90.000
+PEAK  3.000 (ñ0.229) MHz,  Height 122.1 (ñ 7.8) km.    ScaleHt-10.9 (ñ 1.2) km  SlabT  15.0 km
+ 2 Valley  19.1 km wide,  0.07 MHz deep.  Devn 0.56 km.  4 terms fit  1 O + 0 X + 3.  hx= 188.4
+PEAK  4.999 (ñ0.087) MHz,  Height 225.5 (ñ 5.7) km.    ScaleHt-34.1 (ñ 1.1) km  SlabT  68.1 km
+
+(2H) 1E  +  1F; no fc's     Start = 90.000
+PEAK  2.376 (ñ0.021) MHz,  Height 115.0 (ñ 2.1) km.    ScaleHt -8.1 (ñ 0.0) km  SlabT  11.8 km
+ 2 Valley  15.8 km wide,  0.05 MHz deep.  Devn 0.00 km.  4 terms fit  1 O + 0 X + 3.  hx= 203.0
+PEAK  5.262 (ñ0.018) MHz,  Height 243.2 (ñ 2.1) km.    ScaleHt-33.8 (ñ 0.0) km  SlabT  66.6 km
+
+(3) SINGLE-POLYNOMIALS.     FH-1.20  Dip 20.0    Amode 85.0  Valy  0.00  List 0
+
+(3A) VALLEY CALCN (cf 2B)   Start =  0.000
+PEAK  2.987 (ñ0.032) MHz,  Height 122.0 (ñ 1.5) km.    ScaleHt 12.5 (ñ 0.8) km  SlabT  18.6 km
+ 2 Valley  28.7 km wide,  0.10 MHz deep.  Devn 1.91 km.  9 terms fit  9 O + 0 X + 4.  hx= 161.7
+PEAK  4.992 (ñ0.034) MHz,  Height 268.1 (ñ 4.4) km.    ScaleHt 77.6 (ñ 3.3) km  SlabT 108.4 km
+
+(3B)MuchData,X VALY(cf4B)   Start = -1.000
+PEAK  3.509 (ñ0.115) MHz,  Height 115.5 (ñ 1.2) km.    ScaleHt 12.4 (ñ 2.3) km  SlabT  15.2 km
+ 2 Valley  26.0 km wide,  0.09 MHz deep.  Devn 1.89 km.  9 terms fit 29 O + 7 X + 4.  hx= 150.6
+PEAK  6.994 (ñ0.020) MHz,  Height 250.3 (ñ 0.7) km.    ScaleHt 58.7 (ñ 0.8) km  SlabT  85.9 km
+
+(4) X VALLEYS.  FIXED FB    FH-1.20  Dip 20.0    Amode  0.0  Valy  0.00  List 0
+
+(4A) TEST 4B, + DATA ERR.   Start = -1.000
+*****reduce: data error at f, h =   3.100 118.167   3.200  98.715   3.300 127.005
+PEAK  3.529 (ñ0.011) MHz,  Height 115.8 (ñ 0.3) km.    ScaleHt 11.9 (ñ 0.4) km  SlabT  15.2 km
+ 3 Valley  20.6 km wide,  0.06 MHz deep.  Devn 0.53 km.  8 terms fit  7 O + 7 X + 4.  hx= 146.5
+PEAK  6.999 (ñ0.009) MHz,  Height 249.9 (ñ 0.4) km.    ScaleHt 59.8 (ñ 0.5) km  SlabT  86.9 km
+
+(4) X Valley, with list.    FH-1.20  Dip 20.0    Amode  0.0  Valy -1.00  List-1
+
+(4B) TEST4B, 2 parameters   Start = -1.000
+PEAK  3.529 (ñ0.012) MHz,  Height 115.8 (ñ 0.3) km.    ScaleHt 11.8 (ñ 0.4) km  SlabT  15.2 km
+ 7 Valley  18.7 km wide,  0.04 MHz deep.  Devn 0.44 km.  8 terms fit  7 O + 7 X + 4.  hx= 145.6
+PEAK  6.999 (ñ0.010) MHz,  Height 249.7 (ñ 0.4) km.    ScaleHt 59.9 (ñ 0.5) km  SlabT  87.0 km
+
+(5) X START, VARYING FB     FH 1.00  Dip 30.0    Amode  0.0  Valy  0.00  List 1
+
+(5A)TEST 6B NIGHT,DIP 30    Start =  0.000
+ 1 Start Ofset -56.2 km,  Slab  53.1 km.  Devn 0.96 km.  9 terms fit  7 O + 6 X + 3.  hx= 229.2
+ 2 Start Ofset -57.6 km,  Slab  53.3 km.  Devn 1.00 km.  9 terms fit  7 O + 6 X + 3.  hx= 228.5
+
+CANBERRA FIELD(WRONG FH)    FH 1.52  Dip 57.3    Amode  0.0  Valy  0.00  List 1
+
+(5B) BAD START DATA         Start =  0.000
+ 1 Start Ofset-101.7 km,  Slab-163.9 km.  Devn 5.87 km.  7 terms fit  7 O + 2 X + 3.  hx= 123.8
+ X ray Weights Reduced to 1/4.
+ 3 Start Ofset-101.7 km,  Slab-154.7 km.  Devn 5.75 km.  7 terms fit  7 O + 2 X + 3.  hx= 122.0
+PEAK  2.099 (ñ0.030) MHz,  Height 142.4 (ñ 1.4) km.    ScaleHt 14.1 (ñ 3.9) km  SlabT  24.0 km

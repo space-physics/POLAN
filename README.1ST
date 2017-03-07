@@ -1,0 +1,259 @@
+       README  -  MESSAGE TO POLAN USERS  -  FEBRUARY 1988 (to March 1996).
+
+FEB'93--N.B.--The parameter NDIM has been removed from the call to POLAN.
+    So take it out of your mainline.  In its place just ensure that the 1st
+    parameter N is set equal to the maximum dimension of the arrays FV, HT,
+    on the 1st call to POLAN.  You don't need to reset N on later calls.
+
+    This diskette contains all subprograms needed for ionogram analysis using
+POLAN, along with various mainline and test programs.  All files are in
+standard ASCII format.  Programs are written in FORTRAN, and can be processed
+directly by most FORTRAN compilers.
+
+MAR'96-- Compiled versions are also given for POLRUN and POLPLOT.  Running
+POLRUN on the test data file POLRUN.DAT gave me the output POLOUTQ.396.  You
+should get the same result.  This differs slightly from the file POLOUTQ.293,
+obtained in February 1993, because of slight program changes made in the last
+3 years (particularly in handling the absurd case 2H).
+
+COMPATIBILITY NOTES:
+    I have used columns 73-80 for comments, to indicate the logic of different
+statements, so you can't compile these programs in free format.  Some programs
+also use ! to begin longer comments, since this is the default for the LAHEY
+FORTRAN that I use (& recommend).  You may need to replace all ! with your
+symbol (; : ' etc) before the programs will compile with your standard.
+
+    SCION, POLPLOT and SPOLAN use the common  "PRINT #, A, B,.."  for console
+output.  Change these lines to  "WRITE(*, #) A, B,.."  for some FORTRANS.
+
+A.  THE POLAN SUBROUTINES.
+
+    These are contained in four files:-
+
+ 1. POLAN.FOR   
+       The controlling subroutine, called directly from a mainline program. 
+
+ 2. POLSUB.FOR
+       Containing the subroutines COEFIC, ADJUST and REDUCE which are invoked 
+    by POLAN to carry out the major steps in the real-height analysis.
+
+ 3. POLSIN.FOR  
+       Subroutines SETUP, SELDAT and STAVAL which are used by POLAN for 
+    preparing the input data, for selecting data to be used in the next step 
+    of the analysis, and for specific processing of the start and valley 
+    regions. 
+
+ 4. POLMIS.FOR  
+       Containing the miscellaneous subroutines:
+    PEAK  - for layer peak calculations,  
+    TRACE - for optional printouts during the analysis,
+    SOLVE - to solve the set of simultaneous equations which define 
+            the next real-height polynomial (and correct a previous 
+            solution, if required),
+    SUMVAL- to move or sum an array, sum the product of two arrays, 
+            or evaluate a polynomial,  and  
+    GIND  - which calculates values of the group refractive index.
+
+
+    Other programs on this diskette are: 
+
+B.  POLRUN.FOR
+    with the data file POLRUN.DAT, and output files POLOUT and POLOUTQ.
+
+    POLRUN is a short mainline program which is to be linked with the
+subprograms in A. above.  It reads ionogram data in 80-column format, and
+prints the results.  Some standard test data is in a file POLRUN.DAT.
+Enter  "POLRUN POLRUN.DAT"  to run this, giving a 'quick-look' output
+written to POLOUT.T;  this should agree with my output in file POLOUTQ.396.
+
+     If the first line of POLRUN.DAT is deleted, a full listing is obtained
+and this should agree with that in the file POLOUT.396.  This file differs
+somewhat from the listing (POLRUN.OUT) in the UAG report because of changes
+made in the programs, in particular the increase in the default mode of
+analysis from mode 5 to mode 6.
+
+C.  SPOLAN.FOR  and  SOLSUB.FOR
+    with the data files  SPOLAN.DAT and SPOLAN.OUT.
+
+    A simplified version of POLAN, called SPOLAN, has also been developed.  
+This provides nearly all of the facilities of POLAN apart from the use of 
+extraordinary ray data.  It is considerably shorter and is designed  as an 
+introduction to POLAN or for faster running on small machines.  The program 
+SPOLAN.FOR is on this diskette, along with all necessary subroutines 
+(contained in the single file SOLSUB.FOR).  These programs may be compiled 
+and linked with the mainline program POLRUN to make a running version.  
+Suitable test data for the simplified program is in the file SPOLAN.DAT;  
+the output obtained with this data file is as listed in the UAG report, and 
+in the accompanying file SPOLAN.OUT. 
+
+D.  SCION.FOR
+
+    This is a mainline program (to be linked with the POLAN subroutines in 
+A. above) which accepts ionogram data from a digitising table, corrects and 
+deskews the height and frequency values, and calls POLAN to analyse them.  
+It provides an example of the way in which digitised data is ordered for 
+submission to POLAN. 
+
+E.  POLPLOT.FOR
+     
+    This program is not described in UAG-93.  It is used to plot the
+virtual height data, and the calculated profile.  It is included to show
+the technique used for converting the POLAN output to a plotted profile.
+The plotter calls are written for a 386/486 IBM PC, but their purpose
+should be fairly obvious and there will be equivalent calls in most other
+systems.  Or you can link POLPLOT with my graphics package, in GRAF.LIB.
+
+    A version compiled with the simplified 'makefile' is included.  This
+can be run on any data file.  e.g. Enter 'POLPLOT POLRUN.DAT' followed by
+3 more 'ENTERS', to view the profiles calculated from POLRUN.DAT.
+[NOTE-- you will have to REMOVE THE INITIAL 'QuickLook' LINE from polrun.dat]
+
+    The continuous line plotted is simple second difference interpolation (to
+quarters) in the arrays FV and HT, treated separately.  Note that this
+appears satisfactory in all cases (except some odd valleys, which are better
+drawn as straight lines).  You don't need to use a single polynomial
+analysis, which is generally less accurate, to get smooth plots.
+The E region profiles for 1I and 1J are poor, because of the assumption
+of a continuous E-F profile (with no valley) in these analyses.
+
+    The file POLPLOT.OUT was obtained by entering '1' at the first prompt.
+This is basically similar to the POLRUN.OUT file obtained from POLRUN.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    Full details of the above programs (except POLPLOT), along with a
+discussion of the method of analysis, the derivation of the equations, a 
+listing of the FORTRAN code, and suggested procedures for its use are given 
+in a 200-page report "Ionogram analysis with the generalised program POLAN".  
+This is published by the World Data Centre as report UAG-93, and is available 
+from: 
+          World Data Center A for Solar-Terrestrial Physics
+          NOAA, D63
+          325 Broadway
+          Boulder,  Colorado 80303
+          USA
+
+A general discussion of the POLAN approach is given in
+ Titheridge, J.E. (1988).   "The real height analysis of ionograms:
+   A generalised fomulation",  Radio Science 23(5), 831-849.
+
+Other papers on some of the procedures built in to POLAN are:
+ Titheridge, J.E. (1975).  "The relative accuracy of ionogram analysis
+   techniques", Radio Sci., 10(6), 589-599.
+ Titheridge, J.E. (1982).  "The stability of ionogram analysis
+   techniques",  J. Atmos. Terr. Phys., 44(8), 657-669.
+ Titheridge, J.E. (1985a).  "Ionogram analysis: Least squares fitting
+   of a Chapman-layer peak",  Radio Sci., 20(2), 247-256.
+ Titheridge, J.E. (1986).  "Starting models for the real height analysis
+   of ionograms",  J. Atmos. Terr. Phys.,  48(5), 435-446.
+ Titheridge, J.E. (1987).  "Numerical errors in the real-height analysis of
+   ionograms at high latitudes",  Radio Sci., 22(5), 715-727.
+
+--------- IMPLEMENTATION NOTES
+
+    AUGUST 1987:  All programs are compatible with the FORTRAN 77 standard,
+using SAVE statements to remember constants in the subroutines STAVAL, SOLVE
+and GIND.  With some earlier FORTRANs these SAVE statements should be
+commented out.
+
+    Systems which provide run-time checking of array bounds may also require 
+more careful setting of the dimensions given to FV, HT and QQ, in the POLAN 
+subroutines, to match the dimensions you have used in your mainline program. 
+
+    POLAN fits comfortably on any microcomputer, analysing a typical data
+set in about 1 sec (with a floating point processor.  Calculations on
+different machines (with up to 60-bit accuracy) show only slight changes,
+of around 0.001 km, in heights calculated from ordinary ray data.  When a
+calculation is ill-defined, such as a start calculation using poor
+extraordinary ray data, differences in machine accuracy can cause changes
+of 0.1 km or more in the calculated heights at observed frequencies.
+Changes in the unobserved region (f < fmin) can be larger, since the
+distribution of low-density ionisation has only a second order effect on
+heights in the observed range.  Variations can also get MUCH larger if you
+insist on using high-order single-polynomial modes with irregular layers;
+such results are very ill-defined at the ends of the fitted range.
+Overlapping polynomials were developed specifically for their superior
+accuracy in such circumstances, by avoiding end effects.
+
+
+--------- PROFILE ACCURACY
+
+    POLAN lists errors in the calculated peak parameters FC, HMAX and SH.  
+These errors correspond to about an 80% confidence range, in the least-
+squares fit of a Chapman layer peak to calculated profile gradients.  They 
+can appreciably underestimate the true errors when the peak is defined by 
+only a small number of data points which just happen to be a close fit to the 
+Chapman expression.  Also the listed errors make no allowance for real-height 
+errors introduced at lower heights, which will considerably increase the 
+overall uncertainty in the height of the layer peak (HMAX). 
+
+    The main errors in a calculated real-height profile arise from 
+uncertainties in the start region (at night), and in the valley between the 
+E and F layers (during the day).  Lack of data at frequencies below fmin 
+requires the use of some model for the low-density ionisation.  This is 
+best based on the use of a "starting height" which is passed to POLAN as the 
+input parameter START.  Suitable mean values for the starting height can be 
+calculated, as a function of local time, season and latitude, from equations 
+given in J. Atmosph. Terr. Phys. 48 (5), 435-446, 1986. 
+
+    Note that some previous versions of POLAN had an error [the 'additional 
+height' ht(30) was extrapolated and not limited] which produced some over-
+large fluctuations in start calculations. 
+
+    The valley model built in to POLAN uses a valley width proportional to 
+the neutral scale height, which is taken as a simple function of the real 
+height (with, in the present version, a small bias towards the calculated 
+scale height of the underlying peak).  This seems about the best that can be 
+done at present. 
+
+    Most ionograms are continuous across the F1 cusp.  When there is a 
+discontinuity in virtual height, indicating a separate peak for the F1 layer, 
+it may be best to assume only a small following valley.  This is obtained by 
+setting the virtual height at the critical frequency (a scaled or zero value) 
+equal to 0.2.  POLAN then assumes a value of 0.2 for the parameter VALLEY at 
+this point, giving a valley width of 0.2 times the normal default value. 
+
+    When suitable extraordinary ray data is available, an allowance for the 
+ionisation in the unobserved regions is calculated directly within POLAN.  
+With good data this allowance is accurate to about 10 to 30%.  Thus real-
+height errors are typically about one fifth as large as they would be if no 
+allowance was made for underlying or valley ionisation.  Note that calculated 
+heights in the unobserved regions serve only to reproduce the total amount of 
+the unobserved ionisation, and should not be taken to indicate a true profile 
+shape. 
+
+    Good results for the start and valley calculations require good 
+extraordinary ray measurements at low frequencies (where the x trace is 
+curling up, showing increasing group retardation at decreasing frequencies).  
+Results obtained can vary considerably from one ionogram to another, 
+depending on the availability and quality of low-frequency data and the 
+presence or absence of extraordinary ray measurements.  To minimise these 
+variations the model start parameters are included, with a small weight, in 
+all least-squares start calculations.  Data of decreasing quality then tends 
+to give results which are increasingly biased towards the model.  Thus to 
+increase the consistency of start calculations it is recommended that a 
+standardised model value for START is always provided. 
+
+    Extraordinary-ray data is useful only to help in start or valley 
+calculations.  It is not employed at other points since horizontal variations 
+in the ionosphere give varying results from the ordinary and extraordinary 
+components.  Extraordinary ray measurements at frequencies greater than about 
+1.0 MHz above the lowest ordinary ray frequency fmin (for the start), or more 
+than 1.0 MHz above the critical frequency of a lower layer (for the valley 
+calculation) provide little useful information about the unseen regions.  If 
+such data is provided it will be ignored by POLAN in most cases. 
+
+     - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    POLAN is now being used by many different groups, under many different 
+conditions, so we can expect new problems to surface.  Please keep me 
+informed of your experiences with POLAN, so that I can circulate updates as 
+required to improve operation under different conditions. 
+
+    With best wishes,           John E. Titheridge
+                                Physics Department
+                                University of Auckland
+                                Private Bag  92019
+                                Auckland,  New Zealand.
+
+email:  J.TITHERIDGE@auckland.ac.nz
+
