@@ -12,17 +12,25 @@ c                          then FH =-9.  reverts to normal output.
 C-------------------------------------------------------------------------------
       DIMENSION FV(399), HT(399), QQ(50)
       data ndim / 399 /
-      character head*25, dat*8, datin*15
+      character head*25, dat*8, datin*80
+      integer nargin
+
+
       common /test/ test1, test2, test3              !put in POLAN... for debugs
     8 format (/, a,/ ( f8.2, 9f10.2) )
     9 format (/, a,/ (f6.2,f6.1, 6(f8.2, f6.1)) )
       N = ndim                                                   !set array size
-      call date (dat)
-      call getcl(datin)
-      if (datin.eq.' ') print*, 'Name of data file : '
-      if (datin.eq.' ') read *, datin
+      call date_and_time (dat)
+
+      nargin = command_argument_count()
+      if (nargin.gt.0) then
+        call get_command_argument(1,datin)
+      else
+        error stop('must specify input file')
+      endif
+
       OPEN (UNIT=1, FILE= datin, STATUS='OLD')
-      OPEN (UNIT=2, FILE='polout.t')
+      OPEN (UNIT=2, FILE='out.dat')
       write (2,40) datin, dat
 40    format (' P O L A N    of  FEBRUARY 1993.     ',
      &        'Data file: ',a15, '   Run: ',A8,'.')

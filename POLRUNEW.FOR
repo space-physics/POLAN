@@ -22,8 +22,8 @@ C-------------------------------------------------------------------------------
     8 format (/, a,/ ( f8.2, 7f10.2) )
     9 format (/, a,/ (f6.2,f6.1, 4(f8.2, f6.1)) )
       N = ndim                                                   !set array size
-      call date (dat)
-      call getcl(datin)
+      call date_and_time (dat)
+      call get_command(datin)
       if (datin.eq.' ') print*, 'Name of data file : '
       if (datin.eq.' ') read *, datin
       OPEN (UNIT=1, FILE= datin, STATUS='OLD')

@@ -9,6 +9,20 @@ POLAN is a classic Fortran program used to calculate real-height profiles from c
 
 .. contents::
 
+Compile POLAN
+=============
+::
+
+    gfortran polrun.f polan.f POLMIS.FOR POLSIN.FOR POLSUB.FOR -o polan
+
+Basic POLAN Example
+===================
+::
+
+    ./polan examples/in.dat
+
+this creates a big output text file ``out.dat``
+
 POLynomial ANalysis subroutine
 ================================
 ::
@@ -67,7 +81,7 @@ A. DATA ARRAYS
   calculation for that layer.  x-ray data are distinguished by using -f.
 
      The format for input data is best seen by study of the examples in the 
- test file POLRUN.DAT.
+ test file ``examples/in.dat``.
 
 B.  INPUT PARAMETERS
 -------------------- 
@@ -427,6 +441,6 @@ Programs will now run at DIP = 0.  Calculations proceed normally with 2 or
 more data points for each layer;  even a layer with only one point (with
 or without FC) is handled.
 
-(g)  Descriptive comments have been extracted from the listing of POLAN.FOR,
+(g)  Descriptive comments have been extracted from the listing of POLAN.FOR (polan.f),
 into this file.
 

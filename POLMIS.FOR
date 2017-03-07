@@ -467,6 +467,5 @@ c                              f < 0. sections increase accuracy for x ray.
 9     G6 = F + G4
       G7 = (F*G2*G4/G1 - HFH) *(F - G1)/(G3*G6)
       GIND = ABS(G7 + G6)/SQRT(G5*G6) -1.
-      RETURN
-      END
-
+
+      END Function GIND

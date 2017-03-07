@@ -97,8 +97,8 @@ c1.c        Store initial points. Virtual data starts at index kv (43 to 45).
       FV(1) = FA
       HT(1) = HA
       KR = 1                                                            realstrt
-      RETURN
-      END
+
+      END Subroutine SETUP
 cc******************************************************************************
       SUBROUTINE  SELDAT  (NV, FV, HT)
 c                                   called from section c2.2 of polan.    feb84.
@@ -191,8 +191,8 @@ cc70         if (nf.lt.1.or.(nf.lt.2.and.fcc.eq.0.1))  go to 15          end>>>>
             IF (KV.GT.KV1+NV)  GO TO 2                                  redo all
             GO TO 80
 100   IF (NX.EQ.0.AND.KR.EQ.1)  LK = 1                                  no xstrt
-      RETURN
-      END
+
+      END SUBROUTINE SELDAT
 cc******************************************************************************
       SUBROUTINE  STAVAL  (FV,HT, DIP,VALLEY, LOOP)
 c                                                                         feb84.
@@ -444,6 +444,6 @@ c                                      Add points on start polynomial
                       if (lbug.eq.6) call trace (fv,ht,tras)            ##----->
                       if (lbug.eq.6) lbug = 0                           end strt
                       if (lbug.eq.9) lbug = -9                          end valy
-      RETURN
-      END
-
+
+      END SUBROUTINE STAVAL
+

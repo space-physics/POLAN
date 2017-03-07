@@ -238,7 +238,7 @@ c 4-  For a valley calculation:  the initial gradient  dh/df > sha,
 c                                the initial curvature  q(2) < -1.5,
 c                                the initial height offset is positive.
 c 5-  For the last polynomial in a layer (with a peak to be fitted):
-c                       the curvature dýh/dfý is large at the top frequency fm.
+c                       the curvature d\FDh/df\FD is large at the top frequency fm.
 c
 c Adjustments alter the least-squares coefficients  q(1)  to  q(jm),
 c     and the rms deviation of the fit  devn  (stored in q(20)).
@@ -445,6 +445,5 @@ c---
 100   CONTINUE
 c.....
       LK = KR
-      RETURN
-      END
-
+
+      END Subroutine REDUCE
