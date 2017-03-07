@@ -156,4 +156,3 @@ cc      read"(f9.0)", amode
         if(lout>4) write (2,9) 'Input data', (fv(i),ht(i), i= 1,nsav)
          goto 500                                              ! & run new MODE.
       end
-
