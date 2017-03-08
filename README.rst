@@ -13,7 +13,7 @@ Compile POLAN
 =============
 ::
 
-    gfortran polrun.f polan.f POLMIS.FOR POLSIN.FOR POLSUB.FOR -o polan
+    gfortran polrun.f polan.f polmis.f polsin.f polsub.f -o polan
 
 Basic POLAN Example
 ===================
