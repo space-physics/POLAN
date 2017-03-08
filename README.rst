@@ -297,7 +297,7 @@ obtained from the width using equations (14) of the report UAG-93, which give::
 
      D = 0.008 W**2/(20 + W) MHz,  followed by   D = D.FC/(D + FC).
 
-   The end point of the data in QQ is verified by a value  QQ(numq+1) = -99.
+The end point of the data in QQ is verified by a value  QQ(numq+1) = -99.
 For a normal exit, and  -98. for an error (or no-peak) exit.
 
 E.   PROCESSING 
@@ -386,8 +386,7 @@ Go to section 2, to restart for a new layer.
 If there are no further data:
 
 1. add one point half-way to the peak
-2. extrapolate 3 points for the topside ionosphere (assuming a Chapman layer
-with a scale height gradient of 0.1 km/km)
+2. extrapolate 3 points for the topside ionosphere (assuming a Chapman layer with a scale height gradient of 0.1 km/km)
 3. store constants relating to the last layer peak
 4. return.
 
@@ -407,30 +406,11 @@ NOTE: I now use ! for comments; you may need to change this for your compiler.
 F.1 CHANGES  September 1986
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-(a)  Addition of the parameters  NDIM  and  QQ  in the call to POLAN.
-     Use of NDIM makes it unnecessary to reset N (to the dimension of the
-input arrays) on each call.
-QQ returns the coefficients for single-polynomial representations.  
-It is now a required parameter in the call to POLAN,  but is not used if
-(initially) QQ(1) = -1.   (Previous use of QQ returned 1 less coefficient 
-than described in section D.2, since the count nq was taken to include
-the constant HA).  For normal (overlapping polynomial) runs, QQ returns the
-coefficients for the last polynomial, and the peak, in each layer.
-
+(a)  Addition of the parameters  NDIM  and  QQ  in the call to POLAN. Use of NDIM makes it unnecessary to reset N (to the dimension of the input arrays) on each call. QQ returns the coefficients for single-polynomial representations.  It is now a required parameter in the call to POLAN,  but is not used if (initially) QQ(1) = -1.   (Previous use of QQ returned 1 less coefficient  than described in section D.2, since the count nq was taken to include the constant HA).  For normal (overlapping polynomial) runs, QQ returns the coefficients for the last polynomial, and the peak, in each layer.
 (b)  Use of a negative scale height, to indicate use of a model value rather than one derived from the data, is restricted to the output listing (and the output array QQ).  In some previous versions, -SH was accidentally carried over to later stages creating numerous problems. 
-
 (c)  The default analysis (obtained at AMODE = 0.0) has been changed from Mode 5 to Mode 6.  Experience has shown some benefits and no problems with the higher modes, particularly since the change (d) below which gives good results even when the scaled frequency interval varies considerably. 
-
-(d)  Weighting of different points in the least-squares calculation has
-been made proportional to the scaled frequency interval.  This stops smooth
-sections of the profile, where fewer points may have been scaled, from
-getting too low a weight.  It reduces spurious fluctuations in high order
-modes to well below the levels described in J. Atmosph. Terr. Phys. 44,
-657-669, 1982. 
-
+(d)  Weighting of different points in the least-squares calculation has been made proportional to the scaled frequency interval.  This stops smooth sections of the profile, where fewer points may have been scaled, from getting too low a weight.  It reduces spurious fluctuations in high order modes to well below the levels described in J. Atmosph. Terr. Phys. 44, 657-669, 1982. 
 (e)  The START model has been revised to the procedure described in J. Atmosph. Terr. Phys. 48, 435-446, 1986. 
-
 (f)  Minor improvements have been made in several steps of the calculation.  Programs will now run at DIP = 0.  Calculations proceed normally with 2 or more data points for each layer;  even a layer with only one point (with or without FC) is handled.
-
 (g)  Descriptive comments have been extracted from the listing of POLAN.FOR (polan.f), into this file.
 
