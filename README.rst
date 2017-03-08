@@ -140,78 +140,67 @@ Start < -1.0   for x-starts to use a polynomial from (-Start -1.0) MHz. ]
 
 THE final three parameters - AMODE, VALLEY and LIST, are zero for most work.
 
-   AMODE  sets the type of analysis, as listed below.   Zero uses mode 6.
-     Use Amode+10. for 12-point integrals, for high accuracy at large dip
-     angles (this is done automatically, at  DIP > 60, when Amode=0).
-   For denser (e.g. digital) data, with more than 30 points in one layer,
-     use a higher-order mode.  Thus AMODE = 9. gives maximum detail,  or
-     AMODE= 95. gives single-polynomials with 5, 9 terms for the E, F2 layers.
+AMODE
+~~~~~
+sets the type of analysis, as listed below.   
+Zero uses mode 6.
+Use Amode+10. for 12-point integrals, for high accuracy at large dip angles (this is done automatically, at  DIP > 60, when Amode=0).
+For denser (e.g. digital) data, with more than 30 points in one layer, use a higher-order mode.  
+Thus AMODE = 9. gives maximum detail,  or AMODE= 95. gives single-polynomials with 5, 9 terms for the E, F2 layers.
 
-  Values of Amode greater than 29.0 are used to specify the number of
-     polynomial constants to be used to describe each ionospheric layer.
-     e.g. 80.  uses an 8-term real height polynomial for each separate layer.
-          85.  uses 8 terms for the final layer and 5 terms for lower layers.
-          853. uses 8 terms for the last, 3 terms for the first, and 5 terms
-               for any intermediate layer.
+Values of Amode greater than 29.0 are used to specify the number of polynomial constants to be used to describe each ionospheric layer.
 
-     Setting AMODE negative causes physical relations to be omitted from the
-start and valley calculations. 
-------------------------
+Example AMODE values: 
 
-   VALLEY= 0.0 or 1.0  uses a valley width equal to the initial default
-value of twice the local scale height.  The initial default depth is 0.05
-MHz.  The calculated depth is scaled according to (calculated width)**2. 
+80.  uses an 8-term real height polynomial for each separate layer.
+85.  uses 8 terms for the final layer and 5 terms for lower layers.
+853. uses 8 terms for the last, 3 terms for the first, and 5 terms for any intermediate layer.
 
-     Alternative solutions may be obtained as follows:
+Setting AMODE negative causes physical relations to be omitted from the start and valley calculations. 
 
-  VALLEY = 10.0  gives a monotonic (no valley) analysis.
-  Valley =  5.0  gives a maximum valley (upper reasonable limit) analysis.
-  Valley =  0.1 to 5.0  multiplies the standard valley width by this factor.
-  Valley = -.01 to -.99 uses  -2.0 * Valley  as the initial depth
-                             (instead of the default value of 0.05 MHz).
-  Valley = -1.0  iterates both valley depth and width for best fit, with 
-              x-ray data.  (-1.D iterates from an initial depth of 0.D MHz).
-  Valley = -2.0 to -50. specifies a fixed valley width of 2*int(-Valley) km.
-                        Any decimal part D specifies a depth of 2*D in MHz.
-------------------------
+VALLEY
+~~~~~~
 
-  LIST = 0   prints results for the start, peak and valley regions only.
-         1   adds one line of output showing the frequency range and the
-             polynomial coefficients calculated at each step.
-         2, 3   add additional output.
-         4 to 9 show the data used at each step, and the calculated
-                polynomial coefficients:
-            5   shows each set of simult equations, in the call to SOLVE;
-            6/7/8/9 give detail in the start/reduction/peak/valley steps.
+VALLEY= 0.0 or 1.0  uses a valley width equal to the initial default value of twice the local scale height.  
+The initial default depth is 0.05 MHz.  
+The calculated depth is scaled according to (calculated width)**2. 
 
-         LIST negative  suppresses most trace output below the first peak.
-         LIST= -10 suppresses all output, even the normal layer summaries.
+Alternative solutions may be obtained as follows:
+
+VALLEY = 10.0  gives a monotonic (no valley) analysis.
+Valley =  5.0  gives a maximum valley (upper reasonable limit) analysis.
+Valley =  0.1 to 5.0  multiplies the standard valley width by this factor.
+Valley = -.01 to -.99 uses  -2.0 * Valley  as the initial depth (instead of the default value of 0.05 MHz).
+Valley = -1.0  iterates both valley depth and width for best fit, with x-ray data.  (-1.D iterates from an initial depth of 0.D MHz).
+Valley = -2.0 to -50. specifies a fixed valley width of 2*int(-Valley) km. Any decimal part D specifies a depth of 2*D in MHz.
+
+LIST
+~~~~
+
+0         prints results for the start, peak and valley regions only.
+1         adds one line of output showing the frequency range and the polynomial coefficients calculated at each step.
+2,3       add additional output.
+4-9       show the data used at each step, and the calculated polynomial coefficients:
+5         shows each set of simult equations, in the call to SOLVE; 6/7/8/9 give detail in the start/reduction/peak/valley steps.
+negative  suppresses most trace output below the first peak.
+-10       suppresses all output, even the normal layer summaries.
 
 C.  OUTPUT PARAMETERS,  returned by POLAN.
 ------------------------------------------
  
-  The arrays  FV, HT contain the calculated frequencies and real heights.
+The arrays  ``FV``, ``HT`` contain the calculated frequencies and real heights.
 
-  N  gives the number of calculated real-height data points.
+``N``  gives the number of calculated real-height data points.
 
-  The peak of the last layer is at  FC = fv(N-3),  Hmax = ht(N-3).
-  A point at (N-4) is added, on the fitted Chapman-layer peak; this and the
-         points above the peak permit accurate 2nd-difference interpolation.
-  Points at  N-2, N-1 and  N  in the output arrays are extrapolated heights
-         at  0.35, 0.85 and 1.5  scale heights above the peak (calculated from
-             the Chapman expression with a scale height gradient of 0.1).
+The peak of the last layer is at  FC = fv(N-3),  Hmax = ht(N-3).
+A point at (N-4) is added, on the fitted Chapman-layer peak; this and the points above the peak permit accurate 2nd-difference interpolation.
+Points at  N-2, N-1 and  N  in the output arrays are extrapolated heights at  0.35, 0.85 and 1.5  scale heights above the peak (calculated from the Chapman expression with a scale height gradient of 0.1).
 
-  fv(N+1)  gives the standard error of the last critical frequency, in MHz.
-  ht(N+1)  gives the standard error of the last peak height  Hmax,  in km.
-  fv(N+2)  gives the slab thickness, in km.   This is equal to the 
-             sub-peak electron content divided by the peak density.
-  ht(N+2)  gives the scale height SH of the last peak, in km.
-             A negative value of SH shows that a model value was used for
-             the scale height, to limit an unreasonable peak extrapolation.
-
-  QQ returns the real-height coefficients, for single-polynomial calculations,
-             as described under D.2 below.  For overlapping polynomial modes,
-             coefficients are returned for the last polynomial in each layer.
+fv(N+1)  gives the standard error of the last critical frequency, in MHz.
+ht(N+1)  gives the standard error of the last peak height  Hmax,  in km.
+fv(N+2)  gives the slab thickness, in km.   This is equal to the sub-peak electron content divided by the peak density.
+ht(N+2)  gives the scale height SH of the last peak, in km. A negative value of SH shows that a model value was used for the scale height, to limit an unreasonable peak extrapolation.
+QQ       returns the real-height coefficients, for single-polynomial calculations, as described under D.2 below.  For overlapping polynomial modes, coefficients are returned for the last polynomial in each layer.
 
 D.  MODES OF ANALYSIS
 ---------------------
@@ -219,72 +208,68 @@ D.  MODES OF ANALYSIS
 D.1 THE TEN STANDARD MODES
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    MODE is obtained from the input parameter AMODE, modified to the range 
-    1 to 10, and is used to select the type of analysis as summarised below.
-    All Modes include an estimated start correction,  a Chapman-layer peak,
-    and a model valley between layers.
+MODE is obtained from the input parameter AMODE, modified to the range 1 to 10, and is used to select the type of analysis as summarised below.
+All Modes include an estimated start correction,  a Chapman-layer peak, and a model valley between layers.
 
-MODE=1.- The Linear-Lamination analysis.
-     2.- A Parabolic-Lamination analysis, matching end gradients  ( = Paul).
-     3.- Overlapping Cubics, with no spurious oscillations (JATP 1982 p657).
-     4.- Fourth Order Overlapping Polynomials   (Radio Science 1967, p1169).
-     5.- Fifth Order Least-Squares fit to 6 points  (4 virtual + 2 real).
-     6.- Sixth Order Least-Squares fit to 8 points  (5 virtual + 3 real).
-     7.- Sixth Order fit to 7 virtual +3 real heights; calculates 2 new hts.
-     8.- Sixth Order fit to 8 virtual +4 real heights; calculates 2 new hts.
-     9.- Seventh Order fit to 13 virtual + 6 real hts; calculates 3 new hts.
-     10. A Single Polynomial,  fitting  2*sqrt(NV)  terms to  NV heights.
-         A maximum of 90 (=MAXB-9) points can be included in one polynomial.
+1.    The Linear-Lamination analysis.
+2.    A Parabolic-Lamination analysis, matching end gradients  ( = Paul).
+3.    Overlapping Cubics, with no spurious oscillations (JATP 1982 p657).
+4.    Fourth Order Overlapping Polynomials   (Radio Science 1967, p1169).
+5.    Fifth Order Least-Squares fit to 6 points  (4 virtual + 2 real).
+6.    Sixth Order Least-Squares fit to 8 points  (5 virtual + 3 real).
+7.    Sixth Order fit to 7 virtual +3 real heights; calculates 2 new hts.
+8.    Sixth Order fit to 8 virtual +4 real heights; calculates 2 new hts.
+9.    Seventh Order fit to 13 virtual + 6 real hts; calculates 3 new hts.
+10.   A Single Polynomial,  fitting  2*sqrt(NV)  terms to  NV heights.
 
-   The basic parameters which define the type of analysis depend on the
+A maximum of 90 (=MAXB-9) points can be included in one polynomial.
+
+The basic parameters which define the type of analysis depend on the
 parameter MODE, and are obtained from the arrays given below.  
-   NT is the number of terms used in the polynomial representation of each 
+   
+NT      number of terms used in the polynomial representation of each 
 real-height segment.
-   NV is the number of virtual heights which are fitted in this step.
-   NR is the number of previously-calculated real heights which are fitted
-(in addition to the origin FA, HA).  A negative value of NR indicates that
-one of the fitted real heights is below the origin.   If  NT = NV + NR  we
-get an exact fit to the data, and if  NT < NV + NR  the calculated profile
-segment is a least-squares fit. 
-
-   NH is the number of new real heights to be calculated.  
-   'First step' values are used at the beginning of an analysis, or when
+NV      number of virtual heights which are fitted in this step.
+NR      number of previously-calculated real heights which are fitted (in addition to the origin FA, HA).  A negative value of NR indicates that one of the fitted real heights is below the origin.   
+If  NT = NV + NR  we get an exact fit to the data, and if  NT < NV + NR  the calculated profile segment is a least-squares fit. 
+NH      number of new real heights to be calculated.  
+'First step' values are used at the beginning of an analysis, or when
 starting on a new layer, when no real heights are known above the starting
 point.  In this case the number of known real heights is zero, and the
 tabulated values of NR define the position of the origin (counting backwards
 from the last calculated real height) for the following step. 
 
-       |-------- First step --------|    |------- Following steps --------|
-MODE=  1, 2  3  4  5  6  7  8   9  10    1  2  3  4   5   6   7   8   9  10 
- NT =  1, 2, 3, 4, 4, 5, 6, 6,  7, 73,   1, 2, 3, 4,  5,  6,  6,  6,  7, 73
- NV =  1, 2, 3, 4, 5, 7, 8,10, 12, 90,   1, 1, 2, 3,  4,  5,  7,  8, 13, 90
- NR =  0, 0, 0, 1, 1, 2, 2, 3,  5,  2,   0,-1,-1, 1, -2, -3, -3, -4, -6, -3
- NH =  1, 1, 2, 3, 3, 4, 5, 6,  8, 28,   1, 1, 1, 1,  1,  1,  2,  2,  3, 28
-
+========  ===============================  ====================================
+Variable  First step                       Following steps
+========  ===============================  ====================================
+MODE      1, 2  3  4  5  6  7  8   9  10    1  2  3  4   5   6   7   8   9  10 
+ NT       1, 2, 3, 4, 4, 5, 6, 6,  7, 73,   1, 2, 3, 4,  5,  6,  6,  6,  7, 73
+ NV       1, 2, 3, 4, 5, 7, 8,10, 12, 90,   1, 1, 2, 3,  4,  5,  7,  8, 13, 90
+ NR       0, 0, 0, 1, 1, 2, 2, 3,  5,  2,   0,-1,-1, 1, -2, -3, -3, -4, -6, -3
+ NH       1, 1, 2, 3, 3, 4, 5, 6,  8, 28,   1, 1, 1, 1,  1,  1,  2,  2,  3, 28
+========  ===============================  ====================================
 
 D.2 SINGLE-POLYNOMIAL MODES
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-  These use a defined number of real-height coefficients for each layer, 
+These use a defined number of real-height coefficients for each layer, 
 and return all profile parameters in the array QQ.  The order of the 
 analysis is set by the parameter AMODE, as follows.
 
-AMODE = 10L,  where L is an integer in the range 3 to 14, uses a single
-              polynomial with L terms to describe each ionospheric layer.
-AMODE = 10L+M   uses  L terms for the final layer, and M for earlier layers.
-AMODE = 100L+10M+F is L terms for Last, M for Middle and  F for First layer
+AMODE = 10L,        where L is an integer in the range 3 to 14, uses a single polynomial with L terms to describe each ionospheric layer.
+AMODE = 10L+M       uses  L terms for the final layer, and M for earlier layers.
+AMODE = 100L+10M+F  is L terms for Last, M for Middle and  F for First layer
                                              (M and F must be less than 10).
 
 QQ
 ++
 
-returns the real-height parameters which describe the profile, for
-single-polynomial modes of analysis (unless QQ(1) was set equal to -1.0 by
-the calling program).  (For normal [overlapping polynomial] runs, QQ returns
-the coefficients for the last polynomial, and the peak, in each layer.)
+returns the real-height parameters which describe the profile, for single-polynomial modes of analysis (unless QQ(1) was set equal to -1.0 by the calling program). 
+(For normal [overlapping polynomial] runs, ``QQ`` returns the coefficients for the last polynomial, and the peak, in each layer.)
 
 The returned value of QQ(1) gives the total number of stored values (numq).
-Starting at QQ(2), the parameters returned for each layer are:
+Starting at QQ(2), the parameters returned for each layer are::
+
      FA, HA,  nq,  q1, q2, .. qn,  devn,   FP, FC, Hmax, and SH.
 
 nq
@@ -294,30 +279,30 @@ is the number of polynomial coefficients (q1 to qn) used for this layer.
 This is normally equal to the number of coefficients requested in AMODE.
    
 HA is the true height at FA, after any start or valley adjustments, so the 
-real-height profile is 
-              h  =  HA + q1.(f-FA) + q2.(f-FA)^2 + ... qn.(f-FA)^nq.
+real-height profile is::
+
+     h  =  HA + q1.(f-FA) + q2.(f-FA)^2 + ... qn.(f-FA)^nq.
 
 devn is the rms deviation (in km) of the fit to the virtual height data.
 
 FC, Hmax and SH
 +++++++++++++++
 
- are the constants which define the Chapman-layer peak;
-this joins the polynomial section at the frequency FP (close to the second to
-highest scaled frequency for the layer, but limited to 0.9FM < FP < 0.97FC).
+are the constants which define the Chapman-layer peak; this joins the polynomial section at the frequency FP (close to the second to highest scaled frequency for the layer, but limited to 0.9FM < FP < 0.97FC).
 
-   For a 2nd (or 3rd) layer,  FA, HA give the new real-height origin at the 
+For a 2nd (or 3rd) layer,  FA, HA give the new real-height origin at the 
 top of the valley region.   Thus FA is equal to the previous FC,  and the
 valley width is   W = HA - Hmax  in km.   The valley depth (D, in MHz) can be
-obtained from the width using equations (14) of the report UAG-93, which give
+obtained from the width using equations (14) of the report UAG-93, which give::
+
      D = 0.008 W**2/(20 + W) MHz,  followed by   D = D.FC/(D + FC).
 
    The end point of the data in QQ is verified by a value  QQ(numq+1) = -99.
-for a normal exit, and  -98. for an error (or no-peak) exit.
+For a normal exit, and  -98. for an error (or no-peak) exit.
 
 E.   PROCESSING 
 ---------------
- Outline of the REAL-HEIGHT ANALYSIS LOOP within POLAN.
+Outline of the REAL-HEIGHT ANALYSIS LOOP within POLAN.
 
 E.1  THE OVERALL PROCEDURE
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -348,61 +333,63 @@ E.2  INDIVIDUAL STEPS WITHIN EACH CYCLE
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 numbered according to the corresponding section in the program POLAN.
 
-SECTION 2.2  Count initial x-rays.  Check frequency sequencing.
-             Check for cusp, peak, or end of data.
- Set NF = number of o-rays 
-       (= NV, if sufficient points exist before a following peak);
-     NX = number of x-rays;      MV = NF+NX.
-     FM = fv(mf) = the top frequency used in this step.
-     FCC= FC or 0.1 for a peak,  = -.1 for a cusp (gradient discontinuity)
-                        at FM,   = 0.0 otherwise.
+SECTION 2.2  
++++++++++++
+Count initial x-rays.  Check frequency sequencing. Check for cusp, peak, or end of data.
+Set 
+NF      number of o-rays  (= NV, if sufficient points exist before a following peak);
+NX      number of x-rays;  MV = NF+NX.
+FM      fv(mf) = the top frequency used in this step.
+FCC     FC or 0.1 for a peak,  = -.1 for a cusp (gradient discontinuity) at FM, = 0.0 otherwise.
 
-SECTION 2.3  Subtract the group retardation due to the last calculated
-                real-height section.
-     This modifies all the virtual heights at f > FA  (where FA = fv(KR)),
-     and increases the index LK (which gives the point up to which the
-     group retardation has been removed) to KR.
+SECTION 2.3  
++++++++++++
+Subtract the group retardation due to the last calculated real-height section.
+This modifies all the virtual heights at f > FA  (where FA = fv(KR)), and increases the index LK (which gives the point up to which the group retardation has been removed) to KR.
 
-SECTION 3.  Set up equations for the next profile step.
+SECTION 3 
+++++++++++
 
-          Check for the occurrence of a valley; if this is required, set
-     the valley flag HVAL and set initial values for the width and depth.
+1. Set up equations for the next profile step.
+2. Check for the occurrence of a valley; if this is required, set the valley flag HVAL and set initial values for the width and depth.
+3. Set up equations in the matrix B.   For start calculations using x-ray data, or for any valley calculations, add suitably weighted equations specifying desired physical properties of the solution.
 
-          Set up equations in the matrix B.   For start calculations using 
-     x-ray data, or for any valley calculations, add suitably weighted
-     equations specifying desired physical properties of the solution.
+SECTION 4.  
+++++++++++
 
-SECTION 4.  Solve the set of simultaneous equations in the array B.
+Solve the set of simultaneous equations in the array B.
 
-          Check that the solution satisfies basic physical constraints.
-     If it does not, obtain a new least-squares solution with the limiting 
-     constraints imposed (in the subroutine ADJUST).
+Check that the solution satisfies basic physical constraints.
+If it does not, obtain a new least-squares solution with the limiting constraints imposed (in the subroutine ADJUST).
 
-          For an x-start or valley calculation, iterate the solution as
-     required to ensure the use of a correct gyrofrequency height, and 
-     the correct relation between depth and width of the valley.
-          For an o-ray valley, loop once to adjust the valley depth.
+For an x-start or valley calculation, iterate the solution as required to ensure the use of a correct gyrofrequency height, and the correct relation between depth and width of the valley.
+For an o-ray valley, loop once to adjust the valley depth.
 
-SECTION 5.  Calculate and store the real heights.
+SECTION 5.
+++++++++++
 
-          Set KRM as the index for the highest calculated real height.
+* Calculate and store the real heights.
+* Set KRM as the index for the highest calculated real height.
 
-SECTION 6.  Least-squares fitting of a Chapman layer peak.
+SECTION 6. Least-squares fitting of a Chapman layer peak
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-          Calculate the critical frequency and the scale height of a
-     layer peak, by an iterative fit to the real-height gradients at the 
-     last few calculated points  (as in Radio Science 20, 247, 1985).
-          Determine the height of the peak by fitting the peak shape to a 
-     weighted mean of the last few calculated real heights.  Adjust the
-     last real height to agree closely with the Chapman peak (Sept'86).
-     Add an interpolated point between the 'last' height and the peak(2'93).
+1. Calculate the critical frequency and the scale height of a layer peak, by an iterative fit to the real-height gradients at the last few calculated points  (as in Radio Science 20, 247, 1985).
+2. Determine the height of the peak by fitting the peak shape to a weighted mean of the last few calculated real heights.  
+3. Adjust the last real height to agree closely with the Chapman peak (Sept'86).
+4. Add an interpolated point between the 'last' height and the peak(2'93).
 
-SECTION 7.  Go to section 2, to restart for a new layer.
+SECTION 7.  
+++++++++++
+Go to section 2, to restart for a new layer.
 
-     If there are no further data:-   add one point half-way to the peak;
-extrapolate 3 points for the topside ionosphere (assuming a Chapman layer
-with a scale height gradient of 0.1 km/km);  store constants relating to
-the last layer peak;  and return.
+If there are no further data:
+
+1. add one point half-way to the peak
+2. extrapolate 3 points for the topside ionosphere (assuming a Chapman layer
+with a scale height gradient of 0.1 km/km)
+3. store constants relating to the last layer peak
+4. return.
 
 F.  POLAN changes made in recent versions.
 ------------------------------------------
@@ -423,23 +410,16 @@ F.1 CHANGES  September 1986
 (a)  Addition of the parameters  NDIM  and  QQ  in the call to POLAN.
      Use of NDIM makes it unnecessary to reset N (to the dimension of the
 input arrays) on each call.
-
-     QQ returns the coefficients for single-polynomial representations.  
+QQ returns the coefficients for single-polynomial representations.  
 It is now a required parameter in the call to POLAN,  but is not used if
 (initially) QQ(1) = -1.   (Previous use of QQ returned 1 less coefficient 
 than described in section D.2, since the count nq was taken to include
 the constant HA).  For normal (overlapping polynomial) runs, QQ returns the
 coefficients for the last polynomial, and the peak, in each layer.
 
-(b)  Use of a negative scale height, to indicate use of a model value rather
-than one derived from the data, is restricted to the output listing (and the
-output array QQ).  In some previous versions, -SH was accidentally carried
-over to later stages creating numerous problems. 
+(b)  Use of a negative scale height, to indicate use of a model value rather than one derived from the data, is restricted to the output listing (and the output array QQ).  In some previous versions, -SH was accidentally carried over to later stages creating numerous problems. 
 
-(c)  The default analysis (obtained at AMODE = 0.0) has been changed from
-Mode 5 to Mode 6.  Experience has shown some benefits and no problems with
-the higher modes, particularly since the change (d) below which gives good
-results even when the scaled frequency interval varies considerably. 
+(c)  The default analysis (obtained at AMODE = 0.0) has been changed from Mode 5 to Mode 6.  Experience has shown some benefits and no problems with the higher modes, particularly since the change (d) below which gives good results even when the scaled frequency interval varies considerably. 
 
 (d)  Weighting of different points in the least-squares calculation has
 been made proportional to the scaled frequency interval.  This stops smooth
@@ -448,14 +428,9 @@ getting too low a weight.  It reduces spurious fluctuations in high order
 modes to well below the levels described in J. Atmosph. Terr. Phys. 44,
 657-669, 1982. 
 
-(e)  The START model has been revised to the procedure described in J.
-Atmosph. Terr. Phys. 48, 435-446, 1986. 
+(e)  The START model has been revised to the procedure described in J. Atmosph. Terr. Phys. 48, 435-446, 1986. 
 
-(f)  Minor improvements have been made in several steps of the calculation. 
-Programs will now run at DIP = 0.  Calculations proceed normally with 2 or
-more data points for each layer;  even a layer with only one point (with
-or without FC) is handled.
+(f)  Minor improvements have been made in several steps of the calculation.  Programs will now run at DIP = 0.  Calculations proceed normally with 2 or more data points for each layer;  even a layer with only one point (with or without FC) is handled.
 
-(g)  Descriptive comments have been extracted from the listing of POLAN.FOR (polan.f),
-into this file.
+(g)  Descriptive comments have been extracted from the listing of POLAN.FOR (polan.f), into this file.
 
