@@ -10,7 +10,7 @@ POLAN is a classic Fortran program used to calculate real-height profiles from c
           - Nov'87 
 :Author: J. E. Titheridge
 
-The [POLAN code](http://www.sws.bom.gov.au/IPSHosted/INAG/uag_93/uag_93.html) was updated by [Michael Hirsch](https://www.scivision.co) to compile on modern PCs.
+The `POLAN code <http://www.sws.bom.gov.au/IPSHosted/INAG/uag_93/uag_93.html>`_ was updated by `Michael Hirsch <https://www.scivision.co>`_ to compile on modern PCs.
 
 .. contents::
 
