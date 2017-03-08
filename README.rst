@@ -4,8 +4,11 @@ POLAN
 
 POLAN is a classic Fortran program used to calculate real-height profiles from chirp ionosonde data from the ionosphere.
 
-:revised:  Nov'87/ Mar'88/ Feb'93/ (Nov'95)
-:author: J. E. Titheridge
+:Revised: - Nov'95
+          - Feb'93
+          - Mar'88
+          - Nov'87 
+:Author: J. E. Titheridge
 
 .. contents::
 
@@ -31,97 +34,109 @@ POLynomial ANalysis subroutine
 
 for the calculation of real-height profiles from sweep-frequency ionograms.
 
-     This outline is for Versions after September 1986.  It supplements the
-information contained in the 194-page report "Ionogram analysis with the
-generalised program POLAN",  obtainable as report UAG-93 from:-
-     NOAA/NGDC,  325 Broadway,   E/GC2, Dept. 884
-     Boulder,    Colorado 80303, USA.   Phone (303)497-6761.
+This document is for Versions after September 1986.  
+It supplements the information contained in the 194-page report 
+"Ionogram analysis with the generalised program POLAN",  
+obtainable as report ``UAG-93`` from:
 
-     If problems arise run one data set with  LIST = 3, and mail all output
-to:  J.E. Titheridge,  Physics Dept.,  University of Auckland,  New Zealand.
-     or (better) use EMAIL, to:  J.TITHERIDGE@AUCKLAND.AC.NZ
+:address: NOAA/NGDC,  325 Broadway,   E/GC2, Dept. 884  Boulder, CO 80303, USA.   
+:Phone: (303)497-6761
+
+If problems arise
+-----------------
+run one data set with  LIST = 3, and mail all output to:  
+J.E. Titheridge,  Physics Dept.,  University of Auckland,  New Zealand.
+
+or (better)
+
+:Email:  ``j.titheridge@auckland.ac.nz``
 
 NOTE: Profile summaries, and any debug information, are written to unit 2.
-    Changes made in recent versions of POLAN are summarised in section F. below.
+Changes made in recent versions of POLAN are summarised in section F below.
 
 A. DATA ARRAYS
 --------------
 
-  Polan is called with frequency, height data in the arrays  FV, HT.
-        The dimension of these arrays (NDIM) must be greater than
-        30 + the number of data points in the arrays.
-    --> For the first call to POLAN, you must set  N = NDIM.
-  QQ is an output array, used primarily with single-polynomial calculations.
-        For 3 layers and 8-term polynomials, the dimension of QQ must exceed 50.
-        POLAN will not write over a value of -1. in QQ, so setting the last 
-        element of QQ equal to -1.0 will prevent any overflow.  
-        The data returned in QQ is described in D.2 below.
-    --> If this data is not required, use Dimension QQ(2) and set QQ(1)= -1.
+Polan is called with frequency, height data in the arrays  FV, HT.
 
-  In the data arrays, intermediate layers are terminated by a scaled (or 
-        zero) value for the critical frequency, with:-
-            h' = 0.0  for a Chapman peak and normal valley,
-            h' = 10.0 for a peak  with no following valley,
-            h' = negative and less than 50 is used to set the valley
-                     constants, for this valley only, as described below.
-            h' = negative (equal to minus the scaled virtual height)
-                     for a cusp-type discontinuity only.
-        Note that profiles are normally continuous across a cusp point,
-        so h' is scaled normally.  (Or preferably scale points either side
-        of a cusp, and not at the cusp itself;  see JATP 44,657,1982.)
+FV, HT
+~~~~~~
+The dimension of these arrays (NDIM) must be greater than 30 + the number of data points in the arrays.
 
-  The o-ray FC (scaled or zero) may be followed by an x-ray value (-FCX).
+--> For the first call to POLAN, you must set  N = NDIM.
+  
+QQ 
+~~
+is an output array, used primarily with single-polynomial calculations. 
+For 3 layers and 8-term polynomials, the dimension of QQ must exceed 50.
+POLAN will not write over a value of -1. in QQ, so setting the last element of QQ equal to -1.0 will prevent any overflow.  
+The data returned in QQ is described in D.2 below.
+
+--> If this data is not required, use Dimension QQ(2) and set QQ(1)= -1.
+
+data arrays
+~~~~~~~~~~~
+Data array intermediate layers are terminated by a scaled (or zero) value for the critical frequency, with:-
+
+h' = 0.0  for a Chapman peak and normal valley,
+h' = 10.0 for a peak  with no following valley,
+h' = negative and less than 50 is used to set the valley constants, for this valley only, as described below.
+h' = negative (equal to minus the scaled virtual height) for a cusp-type discontinuity only.
+       
+Note that profiles are normally continuous across a cusp point, so ``h'`` is scaled normally.  
+(Or preferably scale points either side of a cusp, and not at the cusp itself;  see JATP 44,657,1982.)
+
+The o-ray FC (scaled or zero) may be followed by an x-ray value (-FCX).
  
-  The final layer is terminated by at least 2 null points, with  h = f = 0.
-  Data can be terminated without a peak by using a final frequency of -1.0.
+The final layer is terminated by at least 2 null points, with  h = f = 0.
+Data can be terminated without a peak by using a final frequency of -1.0.
 
-     Data for the extraordinary ray, if any, precedes the o-ray data for
-  each layer.  This is because x-ray data is used only to calculate the
-  (start or valley) corrections to be made at the beginning of the
-  calculation for that layer.  x-ray data are distinguished by using -f.
+Data for the extraordinary ray, if any, precedes the o-ray data for each layer.  
+This is because x-ray data is used only to calculate the (start or valley) corrections to be made at the beginning of the calculation for that layer.  
+x-ray data are distinguished by using -f.
 
-     The format for input data is best seen by study of the examples in the 
- test file ``examples/in.dat``.
+Input data format
+~~~~~~~~~~~~~~~~~
+best seen by study of the examples in the test file ``examples/in.dat``.
 
 B.  INPUT PARAMETERS
 -------------------- 
 Input parameter in the call to POLAN are here described.
  
-   FB  gives the gyrofrequency at the ground in MHz, for an inverse cube 
-variation.   If you have only the gyrofrequency  FH  at a height  h km,
-the ground value is obtained from    FB = FH * (1. + h/6371.2)**3.
-   To use a gyrofrequency (FH, say) which is independent of height, 
-set  FB = - FH.
-------------------------
+FB
+~~
+gives the gyrofrequency at the ground in MHz, for an inverse cube variation.
+If you have only the gyrofrequency ``FH``  at a height  ``h`` km, the ground value is obtained from::
 
-   DIP  is the magnetic dip angle  IN  DEGREES.   Use of a negative value
-for  DIP suppresses the physical checks which are normally applied to the
-calculated profile,  so that the result obtained is the best mathematical
-(but possibly non-physical) fit to the virtual-height data.  
-  [Some physically based equations are still included in start and valley 
+   FB = FH * (1. + h/6371.2)**3.
+   
+To use a gyrofrequency (FH, say) which is independent of height, set  ``FB = - FH.``
+
+
+DIP
+~~~
+is the magnetic dip angle  IN  DEGREES.   
+Use of a negative value for  DIP suppresses the physical checks which are normally applied to the calculated profile,  so that the result obtained is the best mathematical (but possibly non-physical) fit to the virtual-height data.  
+[Some physically based equations are still included in start and valley 
 calculations, unless AMODE is negative.]
-------------------------
 
-   START normally gives a model height at 0.5 MHz.  Typical values are:    
+START
+~~~~~
+normally gives a model height at 0.5 MHz.  Typical values are:    
 noon   sunset-2/rise+2hr   set/rise    set+1hr   set+2   set+4 to rise-1    
 85km    88km(E layer)    90(E)/80(F)   100 km    130 km     150 km. 
  
-   A preferred procedure is to calculate model values of START from the 
-equations (10) to (13) given in J. Atmosph. Terr. Phys. 48, 435-446, 1986.
+* A preferred procedure is to calculate model values of START from the equations (10) to (13) given in J. Atmosph. Terr. Phys. 48, 435-446, 1986.
+* Use of START = 0.0 makes some allowance for underlying ionisation based on a limited extrapolation of the first few virtual heights.
 
-   Use of START = 0.0 makes some allowance for underlying ionisation based 
-on a limited extrapolation of the first few virtual heights.
-
-   With initial x-ray data, START is taken to give the gyrofrequency height
-for underlying ionisation calculations; the values listed above are still
-suitable for this purpose.  The x-ray data is used to calculate a slab start
-correction from 0.3*fmin  (adding points at 0.3, 0.6 and 0.8 *fmin). 
+With initial x-ray data, START is taken to give the gyrofrequency height for underlying ionisation calculations; the values listed above are still suitable for this purpose.  
+The x-ray data is used to calculate a slab start correction from 0.3*fmin  (adding points at 0.3, 0.6 and 0.8 *fmin). 
 
 [Alternative procedures can be obtained using non-standard values of START:-
-   START between 0. and 44.  defines the plasma frequency for a model start.
-   Start = -1.0   uses a direct start, from the first scaled point.
-   Start < -1.0   for x-starts to use a polynomial from (-Start -1.0) MHz. ]
-------------------------
+   
+START between 0. and 44.  defines the plasma frequency for a model start.
+Start = -1.0   uses a direct start, from the first scaled point.
+Start < -1.0   for x-starts to use a polynomial from (-Start -1.0) MHz. ]
 
 THE final three parameters - AMODE, VALLEY and LIST, are zero for most work.
 
