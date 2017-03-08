@@ -258,8 +258,7 @@ analysis is set by the parameter AMODE, as follows.
 
 AMODE = 10L,        where L is an integer in the range 3 to 14, uses a single polynomial with L terms to describe each ionospheric layer.
 AMODE = 10L+M       uses  L terms for the final layer, and M for earlier layers.
-AMODE = 100L+10M+F  is L terms for Last, M for Middle and  F for First layer
-                                             (M and F must be less than 10).
+AMODE = 100L+10M+F  is L terms for Last, M for Middle and  F for First layer (M and F must be less than 10).
 
 QQ
 ++
