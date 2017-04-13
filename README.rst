@@ -10,7 +10,7 @@ POLAN is a classic Fortran program used to calculate real-height profiles from c
           - Nov'87 
 :Author: J. E. Titheridge
 
-The `POLAN code <http://www.sws.bom.gov.au/IPSHosted/INAG/uag_93/uag_93.html>`_ was updated by `Michael Hirsch <https://www.scivision.co>`_ to compile on modern PCs.
+The `POLAN code <http://www.sws.bom.gov.au/IPSHosted/INAG/uag_93/uag_93.html>`_ was updated by `Michael Hirsch, Ph.D. <https://www.scivision.co>`_ to compile on modern PCs.
 
 .. contents::
 
@@ -18,7 +18,9 @@ Compile POLAN
 =============
 ::
 
-    gfortran polrun.f polan.f polmis.f polsin.f polsub.f -o polan
+    cd bin
+    cmake ..
+    make
 
 Basic POLAN Example
 ===================
@@ -36,22 +38,16 @@ POLynomial ANalysis subroutine
 
 for the calculation of real-height profiles from sweep-frequency ionograms.
 
-This document is for Versions after September 1986.  
-It supplements the information contained in the 194-page report 
-"Ionogram analysis with the generalised program POLAN",  
-obtainable as report ``UAG-93`` from:
+This document is for Polan versions after September 1986.  
+It supplements the information contained in the 194-page report "Ionogram analysis with the generalised program POLAN",  obtainable as report ``UAG-93`` from:
 
 :address: NOAA/NGDC,  325 Broadway,   E/GC2, Dept. 884  Boulder, CO 80303, USA.   
 :Phone: (303)497-6761
+:Email:  ``j.titheridge@auckland.ac.nz``
 
 If problems arise
 -----------------
-run one data set with  LIST = 3, and mail all output to:  
-J.E. Titheridge,  Physics Dept.,  University of Auckland,  New Zealand.
-
-or (better)
-
-:Email:  ``j.titheridge@auckland.ac.nz``
+run one data set with  LIST = 3 and start an Issue.
 
 NOTE: Profile summaries, and any debug information, are written to unit 2.
 Changes made in recent versions of POLAN are summarised in section F below.
