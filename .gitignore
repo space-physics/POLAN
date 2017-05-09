@@ -1,3 +1,6 @@
+build/
+*.egg-info/
+bin/
 polan
 *.dat
 # Compiled Object files
