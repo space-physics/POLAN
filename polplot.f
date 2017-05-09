@@ -1,7 +1,7 @@
       PROGRAM  POLPLOT
 c  Read data (as polrun);  Plot h', f;  Analyse;  Plot h', hr.    Aug'85/Feb'93.
 c                          Plots calculated heights, & curve from QQ when given.
-c  1'93: to new graf library.   Show Chapman peak to ñ1.5SH.
+c  1'93: to new graf library.   Show Chapman peak to 1.5SH.
 c  2'93: amode=-99. to read mode array  domode(12).
       common /test/ test1, test2, test3              !put in POLAN... for debugs
       dimension fv(380), ht(380), qq(90),  fs(120), hs(120)

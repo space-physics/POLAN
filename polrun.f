@@ -24,7 +24,7 @@ C-------------------------------------------------------------------------------
 
       nargin = command_argument_count()
       if (nargin.eq.0) error stop('must specify input file')
- 
+
       call get_command_argument(1,datin)
 
       OPEN (UNIT=1, FILE= datin, STATUS='OLD')
@@ -50,7 +50,7 @@ c
      1       '    Amode',f5.1,'  Valy',f6.2,'  List',i2)
 c
 c-------------------------------------- read data - loop for new ionogram
-200   READ (1,220) HEAD,START, (FV(I),HT(I), I=1,5)                     read(2)-
+200   READ (1,220) HEAD, START, (FV(I),HT(I), I=1,5)                     read(2)-
 220   format (a25, f5.3, 5(f5.3,f5.2) )
          if (fv(1).eq.0.) go to 100                    !read new field constants
       WRITE (2,240)

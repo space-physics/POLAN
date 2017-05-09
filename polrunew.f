@@ -42,6 +42,9 @@ c                                      read field and mode
               if (fh.eq. 0.)  stop
               if (fh.eq. 9.)  go to 20
               if (fh.eq.-9.)  go to 10
+
+      print *,'head',head,'fh',fh,'dip',dip,'amode',amode,
+     &        'valley',valley,'list',list
 c
 150   WRITE (2,160)
       WRITE (2,160) HEAD, FH,DIP, AMODE, VALLEY, LIST

@@ -3,7 +3,7 @@ c N.B.--> 2'93  delete ndim from call;  set by N on 1st call.
 c
 c  A generalised POLynomial real-height ANalysis, for ionograms.  May 1986.
 c
-c  BEFORE USING POLAN STUDY THE DESCRIPTION OF THE PARAMETERS, AND THE 
+c  BEFORE USING POLAN STUDY THE DESCRIPTION OF THE PARAMETERS, AND THE
 c  NECESSARY ARRAY DIMENSIONS, AS GIVEN IN THE TEXT FILE  POLAN.TXT.
 c          (Please list this file, and keep it by you for reference.)
 c-CHANGES-----------------------------------------------------------------------
@@ -24,7 +24,14 @@ c               Trace outputs and abnormal conditions are shown by    **----->
 c               Fuller debug outputs, obtained with  list > 0,  are   ##----->
 c  Loops are delimited by  c.....
 c-------------------------------------------------------------------------------
-      DIMENSION  FV(*), HT(*), QQ(*), IT(20),IV(20),IR(20),IH(20)
+      integer, intent(in) :: N
+      real, intent(inout) :: FV(*),HT(*)
+
+      real, intent(out) ::  QQ(*)
+
+      integer numq, mode
+
+      DIMENSION  IT(20),IV(20),IR(20),IH(20)
       COMMON /POL/ B(99,20),Q(20), FH,ADIP, MODE,MOD, FA,HA, tcont,lbug
       COMMON /POL/ HS, FC,FCC, HMAX,SH, PARHT, HVAL,VWIDTH,VDEPTH, XWAT
       COMMON /POL/ MAXB,NF, NR,NL, NX, MS,MT,JM, LK, KR,KRM, KV,MF, NC  counters
@@ -32,7 +39,7 @@ c-------------------------------------------------------------------------------
       data ndim / 0 /
 cBottom set below is original
 c             |------ first step -------|  |---- following steps -----|
-c  At MODE =  1 2  3  4  5  6  7  8  9 10  1  2  3  4  5  6  7  8  9 10 
+c  At MODE =  1 2  3  4  5  6  7  8  9 10  1  2  3  4  5  6  7  8  9 10
       DATA IT/1,2, 3, 4, 4, 5, 6, 6, 6,73, 1, 2, 3, 4, 5, 6, 6, 6, 6,73/  nterms
       DATA IV/1,2, 3, 4, 5, 7, 8,10,12,90, 1, 1, 2, 3, 4, 5, 7, 8,13,90/  nvirts
       DATA IR/0,0, 0, 1, 1, 2, 2, 3, 5, 2, 0,-1,-1, 1,-2,-3,-3,-4,-6,-3/ realhts
@@ -48,7 +55,7 @@ c                       Set number of coefs.  Don't store any if qq(1) = -1.
                         if (qq(1).ne.-1.) QQ(1) = 1.
           FV(NDIM-45) = -1.                                             end data
           HT(NDIM-45) =  0.
-c1 ---                       (1) Initialisation  
+c1 ---                       (1) Initialisation
 c
       if(list.gt.1) write(2,10)
      &                    n,fv(1),ht(1),fb,dip,start,amode,valley,list
@@ -61,7 +68,7 @@ c1.1                        Set trace, gyrofreq  and  mode  constants.
          lbug= list
          if (lbug.gt.7) lbug = -lbug
          if (lbug.gt.1) call trace (fv,ht, 0.)                          ##----->
-      MODE = ABS(AMODE)
+      MODE = int(ABS(AMODE))
          if (mode.eq.0)  mode = 6 + int(adip/60.)*10
       MODB = 0                                                          normal
          if (mode.ge.30)  modb = mode/10                                one poly
@@ -75,8 +82,8 @@ c1.1                        Set trace, gyrofreq  and  mode  constants.
       mod1 = moda - (moda/10)*10
       if (mode.eq.10.OR.mode.ge.30)  mod1 = 10                          snglpoly
 c-------------------------------------------------------------------------------
-c1.2--  Move the virtual height data to start at  fv(31), ht(31).   
-c    The real, virtual height origins are at  kr, kv  =  1, 31-js  
+c1.2--  Move the virtual height data to start at  fv(31), ht(31).
+c    The real, virtual height origins are at  kr, kv  =  1, 31-js
 c                          (where js is the number of freqs added below fmin).
 c Set fa,ha = the origin (starting point) of the first real-height polynomial;
 c Set    lk = 1 / 0 / -1   for   o-ray / poly / slab start.
@@ -99,7 +106,7 @@ c With x-ray data (-ve freqs) at start or after critical, recalculate ha.
 c
 c Real height origin (fa,ha) is at k = kr, virtual at k = kv.  krm = top real.
 c-----------------------------------------------------------------------------
-c2 ---                             (2) Prepare  Data 
+c2 ---                             (2) Prepare  Data
 c
 c2.1                                Start of analysis (or restart after a peak)
 200   MOD = MOD1                                                        =1 to 10
@@ -150,7 +157,7 @@ c                                  Will set KV= KV+1, if an h' error is removed.
                                   if (jm.le.0) go to 740                exit>>>>
                                   if (lbug.gt.2) call trace (fv,ht,2.3) ##----->
 c===============================================================================
-c3 ---                     (3) Set Up Equations for next profile step 
+c3 ---                     (3) Set Up Equations for next profile step
 c
 c3.1                                   Set number of terms, and origin.
 300   MT = NT
@@ -244,7 +251,7 @@ c
       IF (LOOP.EQ.4)  GO TO 330                                         valyloop
       IF (LOOP.EQ.3.and.FB.GT.0.)  GO TO 330                            xrayloop
 c===============================================================================
-c5 ---                             (5) Store Real Heights 
+c5 ---                             (5) Store Real Heights
 c
       KRM= KR +NR -NL                                                   lastreal
       KVM= KV +NR -NL
@@ -277,7 +284,7 @@ c///////////////////////////////////// End  of  Normal  Steps //////////////////
 c6.0 ---                          store coefficients of last polynomial in qq
       if (qq(1).lt.1.)  go to 620                                        no save
 c
-            numq = qq(1) + 4
+            numq = int(qq(1)) + 4
             do 610 j = numq-3, numq+mq
                if (qq(j).eq.-1.)  go to 620                            !no store
                if (j.ge.numq) qq(j)= q(j-numq+1)      !store poly coefs q, in qq
@@ -308,6 +315,7 @@ c7.1
 c
 c7.2                All finished.  Add points at z= 0.35, 0.85, 1.5  above peak,
 c                                          using a scale height gradient of 0.1.
+
       N = KR + 3
       FV(N-2) = FC *.98642                   !0.3=.98984, 0.4=.98257, 0.5=.97372
       FV(N-1) = FC *.93300                   !0.8=.93957, 0.9=.92622, 1.0=.91213
@@ -319,7 +327,7 @@ c                                          using a scale height gradient of 0.1.
       HT(N+2) = SH                                                      scale ht
       FV(N+3) = 0.                              !( f,h(n+1)=devf,devh from PEAK)
       HT(N+3) = 0.
-      NUMQ = QQ(1)+1.
+      NUMQ = int(QQ(1)) + 1
       if (numq.gt.1)  QQ(NUMQ) = -99.
       RETURN
 c-------------------------------------------------------------------------------
@@ -337,8 +345,8 @@ c
               ht(n) = ht(kv+1)
               fv(n+1) = 0.
               ht(n+1) = 0.
-                 lq = qq(1) +1
+                 lq = int(qq(1)) + 1
                  if (lq.gt.1.and.qq(lq).ne.-1.)  qq(lq) = -98.          err flag
               return
-      END
+      END Subroutine Polan
 

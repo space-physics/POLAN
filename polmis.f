@@ -126,7 +126,7 @@ C---------------------       Fit peak to last nk real heights.
       fw = fv(max(kb,1))
       DO 520 I = 1, NK          !2'93: use mostly zf(fits f/fc), & zg(fits grad)
          W = (fv(kb+i)-fw)**2
-         r = 4.*alog((fv(kb+i)/fc))       !at f,=1+z-e^z for Chap, ÷-z^2/2 parab
+         r = 4.*alog((fv(kb+i)/fc))       !at f,=1+z-e^z for Chap, -z^2/2 parab
          zf = sqrt(-2.*r)                              !1st (parab) approx to zf
          do 505 ii = 1, 3                                      !iterate to Chap:
             rf = 1. + zf - exp(zf)                                 !(z +ve down)
@@ -153,7 +153,7 @@ cc2'93 ??best no shift?  fv(krm) = fm + fadj *0.1    ! ??move sl toward same gra
           if(lbug.eq.8) write(2,9)' fc,fad,hmax,had=',fc,fadj,hmax,hadj !#----->
         endif
       PARHT = HMAX - HT(KRM)                       !parabolic sectn for 'reduce'
-         ht(kr)= hmax - 0.5*parht                  !2'93 add point «-way to peak
+         ht(kr)= hmax - 0.5*parht                  !2'93 add point -way to peak
          z = 0.5*parht/sh
          fv(kr)= FC*exp(0.25*(1. + z - exp(z)))    !on Chapman layer.
          kr = kr + 1                               !(use fp at (kr-2) in coefic)
@@ -186,8 +186,8 @@ c                                           List peak parameters
       SSH = SH
       IF (LOOP.EQ.1)  SSH = -SH                                           -model
       if(lbug.ge.-9)write(2,750) fc,devf,hmax,devh,ssh,devs,tcont/fc**2 **----->
-750    format('PEAK',F7.3,' (ñ',F5.3,') MHz,  Height',F6.1,' (ñ',F4.1,
-     1     ') km.    ScaleHt',f5.1,' (ñ',F4.1,') km  SlabT',F6.1,' km')
+750    format('PEAK',F7.3,' (',F5.3,') MHz,  Height',F6.1,' (',F4.1,
+     1     ') km.    ScaleHt',f5.1,' (',F4.1,') km  SlabT',F6.1,' km')
       FV(KR+4)= devf
       HT(KR+4)= devh
       FV(KV) = FC
@@ -378,7 +378,7 @@ c===============================================================================
 c***********************************************************************jan77.
 c  Returns the sum for  j = 1 to N  of:-
 c     a(j)*b**j  at  L = 1 ;     j*a(j)*b**(j-1)  at  L = 2  (using b = B(1)).
-c 2'93                     (j-1)*j*a(j)*b**(j-2)  at  L = 3  curvature, ä(2-n)
+c 2'93                     (j-1)*j*a(j)*b**(j-2)  at  L = 3  curvature, (2-n)
 c     a(j) *b(j) at  L = 4 ;     a(j)*b(1-L+j*L)  at  L > 4  (giving  LL = 4).
 c-----------------------------------------------------------------------------
       DIMENSION  A(*), B(*)
@@ -395,10 +395,10 @@ c.....................           loop from  j = n  to  j = 1.
 c                       L = 1;  evaluate polynomial  a(j)*b1**j
    1   S = (S + A(J)) * B(1)
       GO TO 8
-c                       L = 2;  calculate gradient,  ä a(j)*j*b1**(j-1)
+c                       L = 2;  calculate gradient,   a(j)*j*b1**(j-1)
    2  S = S*B(1) + A(J)*J
       GO TO 8
-c                       L = 3;  calculate curvature  ä a(j)*j*(j-1)*b1**(j-2)
+c                       L = 3;  calculate curvature   a(j)*j*(j-1)*b1**(j-2)
    3  S = S*B(1) + A(J+1)*(J+1)*J                         !this starts at j= n-1
       GO TO 8
 c                       L = 4;  calculate sum of products  a(j)*b(j)   (JD = 1)
