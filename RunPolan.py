@@ -25,4 +25,4 @@ fv[:Nr] = dat[:,0]
 ht[:Nr] = dat[:,1]
 
 
-qq,Next = runpolan.polan(N,fv,ht,fh, dip, start, amode, valley, debug)
+qq = runpolan.polan(fv,ht,fh, dip, start, amode, valley, debug)
