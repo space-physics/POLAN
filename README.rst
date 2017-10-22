@@ -8,6 +8,7 @@ POLAN is a classic Fortran program used to calculate real-height profiles from c
           - Feb'93
           - Mar'88
           - Nov'87 
+
 :Author: J. E. Titheridge
 
 The `POLAN code <http://www.sws.bom.gov.au/IPSHosted/INAG/uag_93/uag_93.html>`_ was updated by `Michael Hirsch, Ph.D. <https://www.scivision.co>`_ to compile on modern PCs.
@@ -128,13 +129,13 @@ noon   sunset-2/rise+2hr   set/rise    set+1hr   set+2   set+4 to rise-1
 * Use of START = 0.0 makes some allowance for underlying ionisation based on a limited extrapolation of the first few virtual heights.
 
 With initial x-ray data, START is taken to give the gyrofrequency height for underlying ionisation calculations; the values listed above are still suitable for this purpose.  
-The x-ray data is used to calculate a slab start correction from 0.3*fmin  (adding points at 0.3, 0.6 and 0.8 *fmin). 
+The x-ray data is used to calculate a slab start correction from 0.3*fmin  (adding points at 0.3, 0.6 and 0.8*fmin). 
 
-[Alternative procedures can be obtained using non-standard values of START:-
+Alternative procedures can be obtained using non-standard values of START:-
    
 START between 0. and 44.  defines the plasma frequency for a model start.
 Start = -1.0   uses a direct start, from the first scaled point.
-Start < -1.0   for x-starts to use a polynomial from (-Start -1.0) MHz. ]
+Start < -1.0   for x-starts to use a polynomial from (-Start -1.0) MHz. 
 
 THE final three parameters - AMODE, VALLEY and LIST, are zero for most work.
 
@@ -310,21 +311,11 @@ Analysis can proceed with any number of scaled virtual heights (even
 points NV is less than the number of polynomial terms NT (as specified by 
 AMODE), NT is automatically decreased.
 
--    Calculate one polynomial, with NT terms, from the point  FA = fv(K),
-HA = ht(K)  to fit the next NV virtual and NR real heights.  (The fitted 
-real heights include one point below HA, if NR is negative.)   
-The real-height origin (FA,HA) is at K = KR, in the data arrays FV, HT;
-the corresponding virtual height is at K = KV. 
-
--    With x-ray data (-ve frequencies), at the start or after a peak,
-recalculate HA to include the correction for underlying or valley ionisation. 
-
--    Calculate a further NH real heights, and set KR = KR + NH; KV = KV + NH.
+- Calculate one polynomial, with NT terms, from the point  FA = fv(K),HA = ht(K)  to fit the next NV virtual and NR real heights.  (The fitted real heights include one point below HA, if NR is negative.)  The real-height origin (FA,HA) is at K = KR, in the data arrays FV, HT; the corresponding virtual height is at K = KV. 
+- With x-ray data (-ve frequencies), at the start or after a peak, recalculate HA to include the correction for underlying or valley ionisation. 
+- Calculate a further NH real heights, and set KR = KR + NH; KV = KV + NH.
                                                                            
--    Repeat this loop, calculating successive overlapping real-height
-sections, until a critical frequency (or end-of-layer) is found in the range
-KV +1  to  KV +NV +1.   Then calculate real heights at the remaining scaled 
-frequencies and determine a least-squares Chapman-layer peak. 
+-    Repeat this loop, calculating successive overlapping real-height sections, until a critical frequency (or end-of-layer) is found in the range KV +1  to  KV +NV +1.   Then calculate real heights at the remaining scaled frequencies and determine a least-squares Chapman-layer peak. 
 
 E.2  INDIVIDUAL STEPS WITHIN EACH CYCLE
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -410,4 +401,3 @@ F.1 CHANGES  September 1986
 (e)  The START model has been revised to the procedure described in J. Atmosph. Terr. Phys. 48, 435-446, 1986. 
 (f)  Minor improvements have been made in several steps of the calculation.  Programs will now run at DIP = 0.  Calculations proceed normally with 2 or more data points for each layer;  even a layer with only one point (with or without FC) is handled.
 (g)  Descriptive comments have been extracted from the listing of POLAN.FOR (polan.f), into this file.
-
