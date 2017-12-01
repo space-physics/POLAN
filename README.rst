@@ -23,6 +23,8 @@ Compile POLAN
     cmake ..
     make
 
+    pip install -e .
+
 Basic POLAN Example
 ===================
 ::

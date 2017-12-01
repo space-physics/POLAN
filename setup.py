@@ -1,18 +1,11 @@
 #!/usr/bin/env python
-req=['python-dateutil','pytz','nose','numpy','xarray','matplotlib','seaborn']
+install_requires=['numpy']
 # %%
-try:
-    import conda.cli
-    conda.cli.main('install',*req)
-except Exception as e:
-    import pip
-    pip.main(['install'] + req)
-# %%
-import setuptools #enables develop
+from setuptools import find_packages
 from numpy.distutils.core import setup,Extension
 
 setup(name='polan',
-      packages=['polan'],
+      packages=find_packages(),
       author='Michael Hirsch, Ph.D',
       description='Model of Earth ionosphere true height.',
       version='0.1.0',
@@ -27,5 +20,7 @@ setup(name='polan',
       ext_modules=[Extension(name='runpolan',
             sources=['polan.f', 'polmis.f', 'polsin.f', 'polsub.f'],
                     f2py_options=['--quiet'],
-                    extra_f77_compile_args=['-Wno-line-truncation'])]
+                    extra_f77_compile_args=['-Wno-line-truncation'])],
+       install_requires=install_requires,
+       python_requires='>=3.5',
 	  )
