@@ -24,7 +24,7 @@ c               Trace outputs and abnormal conditions are shown by    **----->
 c               Fuller debug outputs, obtained with  list > 0,  are   ##----->
 c  Loops are delimited by  c.....
 c-------------------------------------------------------------------------------
-      integer, intent(in) :: N
+      integer, value :: N
       real, intent(inout) :: FV(*),HT(*)
 
       real, intent(out) ::  QQ(*)
