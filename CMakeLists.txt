@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.3)
 project(polan Fortran)
 enable_testing()
 
@@ -15,3 +15,8 @@ endif()
 add_executable(polan polrun.f polan.f polmis.f polsin.f polsub.f)
 
 add_test(NAME basic COMMAND ./polan ${CMAKE_CURRENT_SOURCE_DIR}/examples/in.dat)
+
+if(NOT WIN32)
+  add_test(NAME CompareOut COMMAND bash -c "diff <(tail -n +2 out.dat) <(tail -n +2 ../examples/out.dat)")
+  set_tests_properties(CompareOut PROPERTIES FIXTURES_SETUP basic)
+endif()

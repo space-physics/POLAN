@@ -24,7 +24,7 @@ c               Trace outputs and abnormal conditions are shown by    **----->
 c               Fuller debug outputs, obtained with  list > 0,  are   ##----->
 c  Loops are delimited by  c.....
 c-------------------------------------------------------------------------------
-      integer, value :: N
+ !     integer, value :: N
       real, intent(inout) :: FV(*),HT(*)
 
       real, intent(out) ::  QQ(*)
@@ -36,7 +36,7 @@ c-------------------------------------------------------------------------------
       COMMON /POL/ HS, FC,FCC, HMAX,SH, PARHT, HVAL,VWIDTH,VDEPTH, XWAT
       COMMON /POL/ MAXB,NF, NR,NL, NX, MS,MT,JM, LK, KR,KRM, KV,MF, NC  counters
       common /test/ test1, test2, test3
-      data ndim / 0 /
+      integer :: ndim = 0
 cBottom set below is original
 c             |------ first step -------|  |---- following steps -----|
 c  At MODE =  1 2  3  4  5  6  7  8  9 10  1  2  3  4  5  6  7  8  9 10

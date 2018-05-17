@@ -12,7 +12,9 @@ c                          then FH =-9.  reverts to normal output.
 C-------------------------------------------------------------------------------
       DIMENSION FV(399), HT(399), QQ(50)
       data ndim / 399 /
-      character head*25, dat*8, datin*80
+      character head*25, dat*8
+      character(256) :: buf
+      character(:), allocatable :: datin
       integer nargin
 
 
@@ -25,13 +27,14 @@ C-------------------------------------------------------------------------------
       nargin = command_argument_count()
       if (nargin.eq.0) error stop('must specify input file')
 
-      call get_command_argument(1,datin)
+      call get_command_argument(1,buf)
+      datin = trim(buf)
 
       OPEN (UNIT=1, FILE= datin, STATUS='OLD')
       OPEN (UNIT=2, FILE='out.dat')
       write (2,40) datin, dat
 40    format (' P O L A N    of  FEBRUARY 1993.     ',
-     &        'Data file: ',a15, '   Run: ',A8,'.')
+     &        'Data file: ',a, '   Run: ',A8,'.')
 cc      QQ(1) = -1.          ! no coefficients back
 10       quik = 0.         ! quick-look off
          GO TO 100
