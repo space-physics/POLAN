@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-install_requires=['numpy']
+install_requires=['numpy','xarray']
 tests_require=['pytest','nose','coveralls']
 # %%
 from setuptools import find_packages
@@ -19,7 +19,7 @@ setup(name='polan',
       'Programming Language :: Python :: 3',
       ],
       ext_modules=[Extension(name='runpolan',
-            sources=['polan.f', 'polmis.f', 'polsin.f', 'polsub.f'],
+            sources=['polan.f', 'polmis.f', 'polsin.f', 'polsub.f','polrunsub.f'],
                     f2py_options=['--quiet'],
                     extra_f77_compile_args=['-Wno-line-truncation'])],
        install_requires=install_requires,
