@@ -25,9 +25,11 @@ c               Fuller debug outputs, obtained with  list > 0,  are   ##----->
 c  Loops are delimited by  c.....
 c-------------------------------------------------------------------------------
       integer, intent(inout) :: N
-      real, intent(inout) :: FV(*),HT(*)
+      integer, intent(in) :: list
+      real, intent(inout) :: FV(N),HT(N)
+      real, intent(in) :: fb,dip, start, amode, valley
 
-      real, intent(out) ::  QQ(*)
+      real, intent(out) ::  QQ(50)
 
       integer :: numq, mode
 

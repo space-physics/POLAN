@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 install_requires=['numpy']
+tests_require=['pytest','nose','coveralls']
 # %%
 from setuptools import find_packages
 from numpy.distutils.core import setup,Extension
@@ -22,5 +23,7 @@ setup(name='polan',
                     f2py_options=['--quiet'],
                     extra_f77_compile_args=['-Wno-line-truncation'])],
        install_requires=install_requires,
+       tests_require=tests_require,
+       extras_require={'tests':tests_require},
        python_requires='>=3.5',
 	  )
