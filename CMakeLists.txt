@@ -2,13 +2,16 @@ cmake_minimum_required(VERSION 3.3)
 project(polan Fortran)
 enable_testing()
 
-add_compile_options(-mtune=native -g -O3) 
+add_compile_options(-g -O3) 
 
 if(${CMAKE_Fortran_COMPILER_ID} STREQUAL GNU)
-  add_compile_options(-Wno-line-truncation)
+  add_compile_options(-mtune=native -Werror=array-bounds -Wno-line-truncation)
 elseif(${CMAKE_Fortran_COMPILER_ID} STREQUAL Intel)
 
-elseif(${CMAKE_Fortran_COMPILER_ID} STREQUAL Flang)
+elseif(${CMAKE_Fortran_COMPILER_ID} STREQUAL PGI)
+  add_compile_options(-Mallocatable=03)
+elseif(${CMAKE_Fortran_COMPILER_ID} STREQUAL Flang) 
+  add_compile_options(-Mallocatable=03)
   link_libraries(-static-flang-libs)
 endif()
 

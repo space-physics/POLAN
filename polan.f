@@ -24,14 +24,13 @@ c               Trace outputs and abnormal conditions are shown by    **----->
 c               Fuller debug outputs, obtained with  list > 0,  are   ##----->
 c  Loops are delimited by  c.....
 c-------------------------------------------------------------------------------
- !     integer, value :: N
+      integer, intent(inout) :: N
       real, intent(inout) :: FV(*),HT(*)
 
       real, intent(out) ::  QQ(*)
 
-      integer numq, mode
+      integer :: numq, mode
 
-      DIMENSION  IT(20),IV(20),IR(20),IH(20)
       COMMON /POL/ B(99,20),Q(20), FH,ADIP, MODE,MOD, FA,HA, tcont,lbug
       COMMON /POL/ HS, FC,FCC, HMAX,SH, PARHT, HVAL,VWIDTH,VDEPTH, XWAT
       COMMON /POL/ MAXB,NF, NR,NL, NX, MS,MT,JM, LK, KR,KRM, KV,MF, NC  counters
@@ -40,10 +39,14 @@ c-------------------------------------------------------------------------------
 cBottom set below is original
 c             |------ first step -------|  |---- following steps -----|
 c  At MODE =  1 2  3  4  5  6  7  8  9 10  1  2  3  4  5  6  7  8  9 10
-      DATA IT/1,2, 3, 4, 4, 5, 6, 6, 6,73, 1, 2, 3, 4, 5, 6, 6, 6, 6,73/  nterms
-      DATA IV/1,2, 3, 4, 5, 7, 8,10,12,90, 1, 1, 2, 3, 4, 5, 7, 8,13,90/  nvirts
-      DATA IR/0,0, 0, 1, 1, 2, 2, 3, 5, 2, 0,-1,-1, 1,-2,-3,-3,-4,-6,-3/ realhts
-      DATA IH/1,1, 2, 3, 3, 4, 5, 6, 8,28, 1, 1, 1, 1, 1, 1, 2, 2, 3,28/ calchts
+      integer,parameter :: IT(20) =[1,2, 3, 4, 4, 5, 6, 6, 6,73, 1, 
+     &                     2, 3, 4, 5, 6, 6, 6, 6,73] !nterms
+      integer,parameter :: IV(20) =[1,2, 3, 4, 5, 7, 8,10,12,90, 1,
+     &                     1, 2, 3, 4, 5, 7, 8,13,90] ! nvirts
+      integer,parameter :: IR(20) =[0,0, 0, 1, 1, 2, 2, 3, 5, 2, 0,
+     &                     -1,-1, 1,-2, -3,-3,-4,-6,-3] ! realhts
+      integer,parameter :: IH(20) =[1,1, 2, 3, 3, 4, 5, 6, 8,28, 1,
+     &                      1, 1, 1, 1, 1, 2, 2, 3,28] ! calchts
 c
          tcontf(x) = (fa*(fa/j+2.*x/(j+1)) + x*x/(j+2)) *x**j           polycont
          maxb= 98          !=dimension of array B, -1.  Set IV(10)=IV(20)=maxb-9

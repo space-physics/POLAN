@@ -12,7 +12,7 @@ c-------------------------------------------------------------------------------
       COMMON /POL/ B(99,20),Q(20), FH,ADIP, MODE,MOD, FA,HA, tcont,lbug
       COMMON /POL/ HS, FC,FCC, HMAX,SH, PARHT, HVAL,VWIDTH,VDEPTH, XWAT
       COMMON /POL/ MAXB,NF, NR,NL, NX, MS,MT,JM, LK, KR,KRM, KV,MF, NC  counters
-          sq(x) = sqrt((1.-x)*(1.+x))
+!          sq(x) = sqrt((1.-x)*(1.+x))
     9 format (a, 10f10.3/(15x,10f10.3))
 c-------------------------------------------------------------------------------
 c                                      Set frequencies

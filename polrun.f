@@ -25,13 +25,13 @@ C-------------------------------------------------------------------------------
       call date_and_time (dat)
 
       nargin = command_argument_count()
-      if (nargin.eq.0) error stop('must specify input file')
+      if (nargin.eq.0) stop('must specify input file')
 
       call get_command_argument(1,buf)
       datin = trim(buf)
 
-      OPEN (UNIT=1, FILE= datin, STATUS='OLD')
-      OPEN (UNIT=2, FILE='out.dat')
+      OPEN (UNIT=1, FILE= datin, STATUS='OLD', action='read')
+      OPEN (UNIT=2, FILE='out.dat',status='replace', action='write')
       write (2,40) datin, dat
 40    format (' P O L A N    of  FEBRUARY 1993.     ',
      &        'Data file: ',a, '   Run: ',A8,'.')
