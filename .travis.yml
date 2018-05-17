@@ -31,7 +31,7 @@ install:
   - make
 
 script:
-  - make test
+  - ctest -R basic
 
 on_failure:
   - ctest -V

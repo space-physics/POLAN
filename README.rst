@@ -1,3 +1,6 @@
+.. image:: https://travis-ci.org/scivision/POLAN.svg?branch=master
+    :target: https://travis-ci.org/scivision/POLAN
+
 =====
 POLAN
 =====
