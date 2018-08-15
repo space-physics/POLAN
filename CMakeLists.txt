@@ -19,7 +19,7 @@ elseif(${CMAKE_Fortran_COMPILER_ID} STREQUAL Flang)
   link_libraries(-static-flang-libs)
 endif()
 
-add_executable(polan polrun.f polan.f polmis.f polsin.f polsub.f)
+add_executable(polan src/polrun.f src/polan.f src/polmis.f src/polsin.f src/polsub.f)
 
 add_test(NAME basic COMMAND ./polan ${CMAKE_CURRENT_SOURCE_DIR}/examples/in.dat)
 
