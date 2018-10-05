@@ -1,9 +1,6 @@
 [![Build Status](https://travis-ci.com/scivision/POLAN.svg?branch=master)](https://travis-ci.com/scivision/POLAN)
 [![Coverage Status](https://coveralls.io/repos/github/scivision/POLAN/badge.svg?branch=master)](https://coveralls.io/github/scivision/POLAN?branch=master)
 [![Build status](https://ci.appveyor.com/api/projects/status/vo37d5quvf8a5ck8?svg=true)](https://ci.appveyor.com/project/scivision/polan)
-[![PyPi version](https://img.shields.io/pypi/pyversions/polan.svg)](https://pypi.python.org/pypi/polan)
-[![PyPi formats](https://img.shields.io/pypi/format/polan.svg)](https://pypi.python.org/pypi/polan)
-[![PyPi Download stats](http://pepy.tech/badge/polan)](http://pepy.tech/project/polan)
 
 
 # POLAN
