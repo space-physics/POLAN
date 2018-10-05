@@ -1,6 +1,5 @@
 from typing import List, Dict
 import numpy as np
-from matplotlib.pyplot import figure
 from pathlib import Path
 
 import runpolan
@@ -39,19 +38,3 @@ def gopolan(infn: Path) -> Dict[str, List[float]]:
             'dip': dip}
 
     return iono
-
-
-def plotiono(iono: Dict[str, List[float]]):
-
-    ax = figure().gca()
-
-    for i, (fv, ht) in enumerate(zip(iono['fv'], iono['height'])):
-        ax.plot(fv, ht, label=f'trace {i}')
-
-    ax.set_xlabel('frequency [MHz]')
-    ax.set_ylabel('height [km]')
-    ax.set_title(f'magnetic dip angle [deg.] {iono["dip"]}')
-
-    ax.grid()
-
-    ax.legend()

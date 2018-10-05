@@ -7,14 +7,18 @@ from pathlib import Path
 from matplotlib.pyplot import show
 
 import polan
+import polan.plots as pp
 
 infn = Path('examples/in.dat')
 
 
-if __name__ == '__main__':
-
+def main():
     iono = polan.gopolan(infn)
 
-    polan.plotiono(iono)
+    pp.plotiono(iono)
 
     show()
+
+
+if __name__ == '__main__':
+    main()
