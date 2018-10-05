@@ -13,7 +13,6 @@ build: off
 
 init:
 - cmd: set PATH=%MINGW_DIR%;%PATH%
-- cmd: set FC=%MINGW_DIR%\gfortran
 
 install:
 - pip install -e .[tests]
