@@ -9,7 +9,7 @@ from matplotlib.pyplot import show
 import polan
 import polan.plots as pp
 
-infn = Path('examples/in.dat')
+infn = Path("examples/in.dat")
 
 
 def main():
@@ -20,5 +20,5 @@ def main():
     show()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

@@ -1,0 +1,31 @@
+name: ci_unix
+
+on:
+  push:
+    paths:
+      - "**.txt"
+      - "**.f"
+      - "**.py"
+      - ".github/workflows/ci_unix.yml"
+  pull_request:
+  release:
+
+
+jobs:
+
+  linux:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v1
+      with:
+        python-version: '3.x'
+
+    - run: pip install .[tests,lint]
+    - run: flake8
+    - run: mypy .
+    - run: pytest
+
+    - run: ctest -S setup.cmake -V
+      env:
+        FC: gfortran

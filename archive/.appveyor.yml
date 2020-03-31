@@ -25,6 +25,5 @@ install:
 - sh: cmake ..
 
 - cmake --build .
-  
-test_script: ctest -R basic -V
 
+test_script: ctest -R basic -V

@@ -1,8 +1,3 @@
-[![Build Status](https://travis-ci.com/scivision/POLAN.svg?branch=master)](https://travis-ci.com/scivision/POLAN)
-[![Coverage Status](https://coveralls.io/repos/github/scivision/POLAN/badge.svg?branch=master)](https://coveralls.io/github/scivision/POLAN?branch=master)
-[![Build status](https://ci.appveyor.com/api/projects/status/vo37d5quvf8a5ck8?svg=true)](https://ci.appveyor.com/project/scivision/polan)
-
-
 # POLAN
 
 POLAN is a classic Fortran program used to calculate real-height
@@ -16,22 +11,21 @@ Revised:
 
 Author:   J.  E.  Titheridge
 
-The [POLAN code](http://www.sws.bom.gov.au/IPSHosted/INAG/uag_93/uag_93.html) was
-updated by [Michael Hirsch, Ph.D.](https://www.scivision.co) to compile
+The
+[POLAN code](http://www.sws.bom.gov.au/IPSHosted/INAG/uag_93/uag_93.html)
+was updated by
+[Michael Hirsch, Ph.D.](https://www.scivision.dev) to compile
 on modern PCs.
-
 
 ## Compile POLAN
 
-    cd bin
-    cmake ..
-    cmake --build .
-
-    pip install -e .
+```sh
+ctest -S setup.cmake -V
+```
 
 ## Basic POLAN Example
 
-    ./polan examples/in.dat
+    ./build/polan examples/in.dat
 
 this creates a big output text file `out.dat`
 
@@ -57,7 +51,7 @@ Email:   `j.titheridge@auckland.ac.nz`
 
 run one data set with LIST = 3 and start an Issue.
 
-NOTE: Profile summaries, and any debug information, are written to unit 2. 
+NOTE: Profile summaries, and any debug information, are written to unit 2.
 Changes made in recent versions of POLAN are summarised in section F
 below.
 

@@ -1,29 +1,22 @@
-cmake_minimum_required(VERSION 3.3)
-project(polan Fortran)
+cmake_minimum_required(VERSION 3.13)
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Release CACHE STRING "Debug or Release")
+endif()
+project(polan
+LANGUAGES Fortran)
 enable_testing()
 
-if(CMAKE_BUILD_TYPE STREQUAL Debug)
-  add_compile_options(-g -O0)
-else()
-  add_compile_options(-O3)
-endif()
 
 if(${CMAKE_Fortran_COMPILER_ID} STREQUAL GNU)
-  add_compile_options(-mtune=native -Werror=array-bounds -Wno-line-truncation)
-elseif(${CMAKE_Fortran_COMPILER_ID} STREQUAL Intel)
-
-elseif(${CMAKE_Fortran_COMPILER_ID} STREQUAL PGI)
-  add_compile_options(-Mallocatable=03)
-elseif(${CMAKE_Fortran_COMPILER_ID} STREQUAL Flang) 
-  add_compile_options(-Mallocatable=03)
-  link_libraries(-static-flang-libs)
+  add_compile_options(-mtune=native -std=legacy)
 endif()
 
-add_executable(polan src/polrun.f src/polan.f src/polmis.f src/polsin.f src/polsub.f)
+add_executable(polan)
+add_test(NAME basic COMMAND $<TARGET_FILE:polan> ${CMAKE_CURRENT_SOURCE_DIR}/examples/in.dat)
 
-add_test(NAME basic COMMAND ./polan ${CMAKE_CURRENT_SOURCE_DIR}/examples/in.dat)
+add_subdirectory(src)
 
-if(NOT WIN32)
+if(UNIX)
   add_test(NAME CompareOut COMMAND bash -c "diff <(tail -n +2 out.dat) <(tail -n +2 ../examples/out.dat)")
   set_tests_properties(CompareOut PROPERTIES FIXTURES_SETUP basic)
 endif()

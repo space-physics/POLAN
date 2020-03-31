@@ -1,0 +1,1 @@
+target_sources(polan PRIVATE polrun.f polan.f polmis.f polsin.f polsub.f)
