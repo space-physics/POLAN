@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-import pytest
 from pathlib import Path
 import polan
 from pytest import approx
@@ -14,7 +12,3 @@ def test_basic():
 
     assert iono["dip"] == 0.0
     assert iono["fv"][0][0] == approx(1.774)
-
-
-if __name__ == "__main__":
-    pytest.main([__file__])

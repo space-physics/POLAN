@@ -1,4 +1,4 @@
-from typing import List, Dict
+from __future__ import annotations
 import numpy as np
 from pathlib import Path
 
@@ -9,7 +9,7 @@ debug = 0
 Lmin = 6  # arbitrary, to discard spurious results
 
 
-def gopolan(infn: Path) -> Dict[str, List[float]]:
+def gopolan(infn: Path) -> dict[str, list[float]]:
 
     fv = np.zeros(N, dtype=np.float32)
     ht = np.zeros(N, dtype=np.float32)
@@ -17,9 +17,9 @@ def gopolan(infn: Path) -> Dict[str, List[float]]:
     fv, ht, qq, fh, dip, start, amode, valley = runpolan.polrun(infn, N, debug)
 
     height = []
-    freqMHz: List[float] = []
-    fr: List[float] = []
-    he: List[float] = []
+    freqMHz: list[float] = []
+    fr: list[float] = []
+    he: list[float] = []
     for i, (f, h) in enumerate(zip(fv, ht)):
         if len(freqMHz) == 0 and f == 0.:  # find first value
             continue
