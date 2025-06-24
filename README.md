@@ -13,9 +13,8 @@ Author:   J.  E.  Titheridge
 
 The
 [POLAN code](http://www.sws.bom.gov.au/IPSHosted/INAG/uag_93/uag_93.html)
-was updated by
-[Michael Hirsch, Ph.D.](https://www.scivision.dev) to compile
-on modern PCs.
+was updated to compile on modern PCs.
+The POLAN website is down and we don't know where the original code is hosted if at all.
 
 ## Compile POLAN
 
