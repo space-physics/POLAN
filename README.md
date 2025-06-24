@@ -42,10 +42,6 @@ from:
 
 address:   NOAA/NGDC, 325 Broadway, E/GC2, Dept. 884 Boulder, CO 80303, USA.
 
-Phone:   (303)497-6761
-
-Email:   `j.titheridge@auckland.ac.nz`
-
 ### If problems arise
 
 run one data set with LIST = 3 and start an Issue.
