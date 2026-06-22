@@ -1,0 +1,49 @@
+{
+  "version": 6,
+
+"configurePresets": [
+{
+  "name": "default",
+  "binaryDir": "build",
+  "installDir": "build/local"
+}
+],
+"buildPresets": [
+  { "name": "default", "configurePreset": "default", "configuration": "Release" }
+],
+"testPresets": [
+{
+  "name": "default",
+  "configurePreset": "default",
+  "output": {
+    "outputOnFailure": true,
+    "verbosity": "verbose"
+  },
+  "execution": {
+    "noTestsAction": "error",
+    "scheduleRandom": true,
+    "stopOnFailure": false,
+    "timeout": 60
+  }
+}
+],
+"packagePresets": [
+  {
+    "name": "default",
+    "configurePreset": "default",
+    "configFile": "CPackConfig.cmake",
+    "generators": [
+      "TBZ2"
+    ]
+  }
+],
+"workflowPresets": [
+  {
+    "name": "default", "steps": [
+      { "type": "configure", "name": "default"},
+      { "type": "build", "name": "default" },
+      { "type": "test", "name": "default" }
+    ]
+  }
+]
+}

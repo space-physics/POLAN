@@ -1,4 +1,3 @@
-from __future__ import annotations
 import numpy as np
 from pathlib import Path
 
@@ -8,8 +7,10 @@ N = 399
 debug = 0
 Lmin = 6  # arbitrary, to discard spurious results
 
+__version__ = "1.0.0"
 
-def gopolan(infn: Path) -> dict[str, list[float]]:
+
+def gopolan(infn: Path) -> dict:
 
     fv = np.zeros(N, dtype=np.float32)
     ht = np.zeros(N, dtype=np.float32)

@@ -1,0 +1,35 @@
+name: ci_unix
+
+env:
+  CMAKE_BUILD_TYPE: Release
+
+on:
+  push:
+    paths:
+      - "**.txt"
+      - "**.f"
+      - "**.py"
+      - ".github/workflows/ci.yml"
+  pull_request:
+
+
+jobs:
+
+  linux:
+    runs-on: [macos-latest, ubuntu-latest]
+
+    env:
+      FC: gfortran-14
+
+    steps:
+    - uses: actions/checkout@v6
+    - uses: actions/setup-python@v6
+      with:
+        python-version: '3.10'
+
+    - run: pip install .[tests]
+    - run: mypy --non-interactive
+
+    - run: pytest
+
+    - run: cmake --workflow default
