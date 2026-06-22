@@ -1,5 +1,7 @@
 # POLAN
 
+[![ci](https://github.com/space-physics/POLAN/actions/workflows/ci.yml/badge.svg)](https://github.com/space-physics/POLAN/actions/workflows/ci.yml)
+
 POLAN is a classic Fortran program used to calculate real-height
 profiles from chirp ionosonde data from the ionosphere.
 

@@ -1,7 +1,8 @@
 import numpy as np
 from pathlib import Path
 
-import runpolan
+# Fortran f2py module
+from . import runpolan  # type: ignore[attr-defined]
 
 N = 399
 debug = 0
@@ -10,12 +11,16 @@ Lmin = 6  # arbitrary, to discard spurious results
 __version__ = "1.0.0"
 
 
-def gopolan(infn: Path) -> dict:
+def gopolan(infn: Path | str) -> dict:
+
+    infn = Path(infn)
+    if not infn.exists():
+        raise FileNotFoundError(f"POLAN input file not found: {infn}")
 
     fv = np.zeros(N, dtype=np.float32)
     ht = np.zeros(N, dtype=np.float32)
 
-    fv, ht, qq, fh, dip, start, amode, valley = runpolan.polrun(infn, N, debug)
+    fv, ht, qq, fh, dip, start, amode, valley = runpolan.polrun(str(infn), N, debug)
 
     height = []
     freqMHz: list[float] = []

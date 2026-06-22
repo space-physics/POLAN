@@ -1,8 +1,9 @@
 from pathlib import Path
 import polan
+import pytest
 from pytest import approx
 
-R = Path(__file__).resolve().parents[1]
+R = Path(__file__).resolve().parents[3]
 infn = R / "examples/in.dat"
 
 
@@ -12,3 +13,10 @@ def test_basic():
 
     assert iono["dip"] == 0.0
     assert iono["fv"][0][0] == approx(1.774)
+
+
+def test_missing_input_raises_file_not_found():
+
+    missing = R / "examples/does-not-exist.dat"
+    with pytest.raises(FileNotFoundError):
+        polan.gopolan(missing)

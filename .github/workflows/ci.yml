@@ -1,35 +1,74 @@
-name: ci_unix
-
-env:
-  CMAKE_BUILD_TYPE: Release
+name: ci
 
 on:
   push:
     paths:
-      - "**.txt"
       - "**.f"
       - "**.py"
       - ".github/workflows/ci.yml"
   pull_request:
+  workflow_dispatch:
 
+# avoid wasted runs
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
 
   linux:
-    runs-on: [macos-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
 
     env:
       FC: gfortran-14
 
     steps:
-    - uses: actions/checkout@v6
-    - uses: actions/setup-python@v6
+    - &checkout
+      uses: actions/checkout@v6
+    - &setup-python
+      uses: actions/setup-python@v6
       with:
         python-version: '3.10'
 
-    - run: pip install .[tests]
-    - run: mypy --non-interactive
+    - &install-pytest
+      name: Python package Meson build
+      run: pip install .[tests]
 
-    - run: pytest
+    - &mypy
+      name: Type annotation checks
+      run: mypy
 
-    - run: cmake --workflow default
+    - &pytest
+      name: Python package self-tests
+      run: pytest
+
+    - &cmake-workflow
+      name: non-Python, standalone CMake build and test
+      run: cmake --workflow default
+
+
+  windows-msys:
+    runs-on: windows-latest
+    timeout-minutes: 10
+
+    steps:
+    - uses: msys2/setup-msys2@v2
+      id: msys2
+      with:
+        update: true
+        install: >-
+          mingw-w64-ucrt-x86_64-gcc-fortran
+
+    - name: Put MSYS2_MinGW64 on PATH
+      shell: bash
+      run: echo "${{ steps.msys2.outputs.msys2-location }}/ucrt64/bin" >> $GITHUB_PATH
+
+    - *checkout
+    - *setup-python
+    - *install-pytest
+    - *mypy
+    - *pytest
+    - *cmake-workflow

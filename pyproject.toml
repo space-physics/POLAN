@@ -1,13 +1,14 @@
 [build-system]
-requires = ["setuptools>=75", "wheel", "numpy>=1.21"]
-build-backend = "setuptools.build_meta"
+requires = ["meson-python>=0.16", "meson>=1.2", "ninja>=1.11", "numpy>=1.21"]
+build-backend = "mesonpy"
 
 [project]
 name = "polan"
+dynamic = ["version"]
 description = "Model of Earth ionosphere true height"
 readme = { file = "README.md", content-type = "text/markdown" }
 requires-python = ">=3.10"
-license = { file = "LICENSE" }
+license-files = ["LICENSE"]
 keywords = ["ionosphere", "thermosphere"]
 classifiers = [
 	"Development Status :: 4 - Beta",
@@ -16,27 +17,13 @@ classifiers = [
 	"Programming Language :: Python :: 3",
 	"Topic :: Scientific/Engineering :: Atmospheric Science",
 ]
-dependencies = ["numpy"]
-dynamic = ["version"]
+dependencies = ["numpy>=1.21"]
 
 [project.urls]
 Homepage = "https://github.com/space-physics/polan"
 
-[tool.setuptools.dynamic]
-version = {attr = "polan.__version__"}
-
 [project.optional-dependencies]
 tests = ["pytest", "mypy"]
-plot = ["matplotlib"]
 
-[tool.setuptools]
-include-package-data = true
-ext-modules = [
-	{ name = "runpolan", sources = [
-			"src/polan.f",
-			"src/polmis.f",
-			"src/polsin.f",
-			"src/polsub.f",
-			"src/polrunsub.f",
-		], extra-compile-args = ["-std=legacy"] }
-]
+[tool.mypy]
+files = ["."]
