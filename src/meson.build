@@ -8,7 +8,6 @@ numpy_include = run_command(
   ['-c', 'import numpy; print(numpy.get_include())'],
   check: true
 ).stdout().strip()
-
 inc_numpy = include_directories(numpy_include)
 
 fortran_sources = files(
@@ -26,7 +25,7 @@ f2py_wrapper = custom_target(
   output: ['runpolanmodule.c', 'runpolan-f2pywrappers.f'],
   command: [
     py, '-c',
-    'import pathlib, shutil, subprocess, sys; outdir = pathlib.Path(sys.argv[1]); subprocess.run([sys.executable, "-m", "numpy.f2py", *sys.argv[2:], "-m", "runpolan", "--lower"], check=True); shutil.move("runpolanmodule.c", outdir / "runpolanmodule.c"); shutil.move("runpolan-f2pywrappers.f", outdir / "runpolan-f2pywrappers.f")',
+    'import pathlib, subprocess, sys; outdir = pathlib.Path(sys.argv[1]); outdir.mkdir(parents=True, exist_ok=True); inputs = [str(pathlib.Path(p).resolve()) for p in sys.argv[2:]]; subprocess.run([sys.executable, "-m", "numpy.f2py", *inputs, "-m", "runpolan", "--lower"], check=True, cwd=outdir)',
     '@OUTDIR@',
     '@INPUT@',
   ],

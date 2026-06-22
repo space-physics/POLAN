@@ -52,8 +52,22 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
-    - name: Python package Meson build
-      run: pip install .[tests]
+    - name: Install Python build tools
+      run: pip install numpy meson meson-python ninja
+
+    - name: Python package Meson editable install
+      run: pip install --no-build-isolation -e .[tests]
+
+    - name: Editable import smoke test
+      run: python -c "import polan; print(polan.__version__)"
+
+    - name: Switch to standard (non-editable) install
+      run: |
+        pip uninstall -y polan
+        pip install .[tests]
+
+    - name: Standard install import smoke test
+      run: python -c "import polan; print(polan.__version__)"
 
     - name: Type annotation checks
       run: mypy
