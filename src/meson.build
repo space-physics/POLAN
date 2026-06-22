@@ -2,13 +2,21 @@ py_mod = import('python')
 py = py_mod.find_installation(pure: false)
 py_dep = py.dependency()
 
-# Discover NumPy include directory at configure time
-numpy_include = run_command(
+# NumPy and f2py include directories (canonical f2py + Meson pattern)
+# https://numpy.org/doc/stable/f2py/buildtools/meson.html
+incdir_numpy = run_command(
   py,
   ['-c', 'import numpy; print(numpy.get_include())'],
   check: true
 ).stdout().strip()
-inc_numpy = include_directories(numpy_include)
+
+incdir_f2py = run_command(
+  py,
+  ['-c', 'import numpy.f2py; print(numpy.f2py.get_include())'],
+  check: true
+).stdout().strip()
+
+inc_np = include_directories(incdir_numpy, incdir_f2py)
 
 fortran_sources = files(
   'polan.f',
@@ -18,40 +26,32 @@ fortran_sources = files(
   'polrunsub.f',
 )
 
-# Generate C API wrapper using numpy.f2py and move outputs to build directory
-f2py_wrapper = custom_target(
-  'runpolan-f2py-wrapper',
+# Generate the C API wrapper from Fortran sources with numpy.f2py.
+# '--build-dir @OUTDIR@' makes f2py write its outputs where Meson expects them.
+runpolan_source = custom_target(
+  'runpolanmodule.c',
   input: fortran_sources,
   output: ['runpolanmodule.c', 'runpolan-f2pywrappers.f'],
   command: [
-    py, '-c',
-    'import pathlib, subprocess, sys; outdir = pathlib.Path(sys.argv[1]); outdir.mkdir(parents=True, exist_ok=True); inputs = [str(pathlib.Path(p).resolve()) for p in sys.argv[2:]]; subprocess.run([sys.executable, "-m", "numpy.f2py", *inputs, "-m", "runpolan", "--lower"], check=True, cwd=outdir)',
-    '@OUTDIR@',
+    py, '-m', 'numpy.f2py',
     '@INPUT@',
+    '-m', 'runpolan',
+    '--lower',
+    '--build-dir', '@OUTDIR@',
   ],
 )
 
-# Copy f2py runtime support headers from NumPy to stable build location
-f2py_runtime = custom_target(
-  'runpolan-f2py-runtime',
-  output: ['fortranobject.c', 'fortranobject.h'],
-  command: [
-    py, '-c',
-    'import shutil, sys, pathlib; import numpy.f2py as f2py; src = pathlib.Path(f2py.get_include()); out = pathlib.Path(sys.argv[1]); shutil.copyfile(src / "fortranobject.c", out / "fortranobject.c"); shutil.copyfile(src / "fortranobject.h", out / "fortranobject.h")',
-    '@OUTDIR@',
-  ],
-)
-
-# Build extension module
+# Build the extension module. fortranobject.c is referenced directly from the
+# installed NumPy f2py include directory; no copying required.
 py.extension_module(
   'runpolan',
   [
     fortran_sources,
-    f2py_wrapper,
-    f2py_runtime[0],
+    runpolan_source,
+    incdir_f2py / 'fortranobject.c',
   ],
+  include_directories: inc_np,
   dependencies: py_dep,
-  include_directories: [inc_numpy],
   link_language: 'fortran',
   install: true,
   subdir: 'polan',
