@@ -16,6 +16,10 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  CMAKE_GENERATOR: Ninja
+# works for all including Windows so that MSVC isn't auto-selected
+
 jobs:
 
   core:

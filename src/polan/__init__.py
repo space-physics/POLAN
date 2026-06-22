@@ -8,7 +8,7 @@ N = 399
 debug = 0
 Lmin = 6  # arbitrary, to discard spurious results
 
-__version__ = "1.0.0"
+__version__ = "1.1.0"
 
 
 def gopolan(infn: Path | str) -> dict:
