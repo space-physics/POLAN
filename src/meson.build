@@ -41,6 +41,22 @@ runpolan_source = custom_target(
   ],
 )
 
+# On Windows with gfortran (MinGW), statically link the Fortran runtime so the
+# extension module is self-contained and does not need the MinGW runtime DLLs
+# (libgfortran, libgcc, libquadmath, libwinpthread) on PATH at import time.
+fortran_compiler = meson.get_compiler('fortran')
+extra_link_args = []
+if host_machine.system() == 'windows' and fortran_compiler.get_id() == 'gcc'
+  extra_link_args += [
+    '-static-libgcc',
+    '-static-libgfortran',
+    '-static-libquadmath',
+    '-Wl,-Bstatic,--whole-archive',
+    '-lwinpthread',
+    '-Wl,--no-whole-archive',
+  ]
+endif
+
 # Build the extension module. fortranobject.c is referenced directly from the
 # installed NumPy f2py include directory; no copying required.
 py.extension_module(
@@ -53,6 +69,7 @@ py.extension_module(
   include_directories: inc_np,
   dependencies: py_dep,
   link_language: 'fortran',
+  link_args: extra_link_args,
   install: true,
   subdir: 'polan',
 )
