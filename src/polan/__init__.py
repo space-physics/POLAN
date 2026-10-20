@@ -1,5 +1,6 @@
 import numpy as np
 from pathlib import Path
+import xarray
 
 # Fortran f2py module
 from . import runpolan  # type: ignore[attr-defined]
@@ -11,7 +12,7 @@ Lmin = 6  # arbitrary, to discard spurious results
 __version__ = "1.1.0"
 
 
-def gopolan(infn: Path | str) -> dict:
+def gopolan(infn: Path | str) -> xarray.Dataset:
 
     infn = Path(infn)
     if not infn.exists():
@@ -39,8 +40,15 @@ def gopolan(infn: Path | str) -> dict:
             fr.append(f)
             he.append(h)
 
-    iono = {'fv': freqMHz,
-            'height': height,
-            'dip': dip}
+    # ragged arrays to xarray Dataset
+    maxlen = max((len(p) for p in freqMHz), default=0)
+
+    iono = xarray.Dataset(
+        {
+            'fv': (('profile', 'point'), np.array([p + [0.] * (maxlen - len(p)) for p in freqMHz], dtype=np.float32)),
+            'height': (('profile', 'point'), np.array([p + [0.] * (maxlen - len(p)) for p in height], dtype=np.float32)),
+            'dip': dip
+        }
+    )
 
     return iono

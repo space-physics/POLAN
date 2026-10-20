@@ -13,7 +13,7 @@ c                          then FH =-9.  reverts to normal output.
 C-------------------------------------------------------------------------------
       character(*), intent(in) :: datin
       integer, intent(in) :: ndim
-      real,intent(out) :: FV(ndim), HT(ndim), QQ(50), FH, dip, start, 
+      real,intent(out) :: FV(ndim), HT(ndim), QQ(50), FH, dip, start,
      &                    amode, valley
       integer, value :: list
       character head*25, dat*8
@@ -26,7 +26,7 @@ C-------------------------------------------------------------------------------
     9 format (/, a,/ (f6.2,f6.1, 6(f8.2, f6.1)) )
       N = ndim                                                   !set array size
       call date_and_time (dat)
-    
+
 
       OPEN (newUNIT=u, FILE= datin, STATUS='OLD', action='read')
  !     OPEN (UNIT=2, FILE='out.dat',status='replace', action='write')
@@ -43,14 +43,14 @@ c                                      read field and mode
       if (fh == 0) then
         close(u)
         return
-      elseif(fh == 9) then 
+      elseif(fh == 9) then
         quik = 1 ! quick-look on
         cycle outer
       elseif (fh==-9) then
         quik = 0 ! quick-look off
         cycle outer
       endif
-                
+
 c
 !150   WRITE (2,160)
 !      WRITE (2,160) HEAD, FH,DIP, AMODE, VALLEY, LIST
@@ -69,22 +69,22 @@ c-------------------------------------- read data - loop for new ionogram
 240   format (a25,'   Start =',F7.3)
       NH = 5
 
-      do while (.not.((FV(NH)+HT(NH).eq.0..and.HT(NH-1).eq.0.) .or.              
-     &      (FV(NH).eq.-1. .OR. NH.gt.NDIM-40))) 
+      do while (.not.((FV(NH)+HT(NH).eq.0..and.HT(NH-1).eq.0.) .or.
+     &      (FV(NH).eq.-1. .OR. NH.gt.NDIM-40)))
           read(u,320) (FV(I),HT(I), I= NH+1, NH+8)                      -read(2)
 320       format (8(f5.3,f5.2))
           NH = NH+8
       enddo
-       
+
        do while (fv(nh)+ht(nh-1) == 0.)
          nh = nh-1
        enddo
 
-      if (quik<1.) write (2,9) 'Input data', (fv(i),ht(i), i= 1,nh)         list
+!      if (quik<1.) write(2,9) 'Input data', (fv(i),ht(i), i= 1,nh)         list
 c-------------------------------------- analysis
 c
       if (quik >= 1)  list = 0
-      
+
       CALL POLAN (N,FV,HT, QQ, FH,DIP, START, AMODE, VALLEY, LIST)
 c
 c-------------------------------------- output
@@ -96,7 +96,7 @@ c
 !      write (2,*)'===================================================='
       end do inner
       end do outer
-      
+
       close(u)
 
       END subroutine polrun

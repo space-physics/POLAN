@@ -74,4 +74,8 @@ py.extension_module(
   subdir: 'polan',
 )
 
-py.install_sources('polan/__init__.py', subdir: 'polan')
+py.install_sources(
+  'polan/__init__.py',
+  'polan/plot.py',
+  subdir: 'polan',
+)

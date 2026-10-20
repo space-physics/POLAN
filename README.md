@@ -24,7 +24,7 @@ which requires disabling build isolation
 ```sh
 pip install numpy meson meson-python ninja
 
-pip install -e --no-build-isolation ./POLAN
+pip install --no-build-isolation -e ./POLAN
 ```
 
 ## CMake build (optional)
